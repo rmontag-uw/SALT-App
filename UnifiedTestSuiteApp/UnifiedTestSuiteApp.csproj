@@ -35,6 +35,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ivi.Visa, Version=5.11.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\testbedProgram\TestSuiteInterface\bin\Release\netstandard2.0\Ivi.Visa.dll</HintPath>
+    </Reference>
+    <Reference Include="NationalInstruments.Common, Version=17.5.40.49153, Culture=neutral, PublicKeyToken=dc6ad606294fc298, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\National Instruments\Measurement Studio\DotNET\v4.0\AnyCPU\NationalInstruments.Common 19.0.40\NationalInstruments.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="NationalInstruments.Visa, Version=19.0.0.49152, Culture=neutral, PublicKeyToken=2eaa5af0834e221d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\IVI Foundation\VISA\Microsoft.NET\Framework32\v4.0.30319\NI VISA.NET 19.0\NationalInstruments.Visa.dll</HintPath>
+    </Reference>
+    <Reference Include="OscilloscopeAPI">
+      <HintPath>..\..\OscilloscopeAPI\OscilloscopeAPI\bin\Debug\netstandard2.0\OscilloscopeAPI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -45,6 +60,12 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="TestAndMeasurementInterface">
+      <HintPath>..\..\TestAndMeasurementInterface\TestAndMeasurementInterface\bin\Release\netstandard2.0\TestAndMeasurementInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="TestSuiteInterface">
+      <HintPath>..\..\testbedProgram\TestSuiteInterface\bin\Release\netstandard2.0\TestSuiteInterface.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
