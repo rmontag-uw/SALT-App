@@ -12,6 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using NationalInstruments.Visa;
+using OscilloscopeAPI;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Series;
+using System.IO;
+using System.Threading;
+using System.Timers;
 
 namespace UnifiedTestSuiteApp
 {
