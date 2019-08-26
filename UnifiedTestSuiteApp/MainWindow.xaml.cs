@@ -326,6 +326,50 @@ namespace UnifiedTestSuiteApp
             CheckMemoryDepth(tempAllowedMemDepths);
             WaveformPlot.Model = new PlotModel { Title = "Oscilloscope Capture" };
 
+
+            foreach (string memoryLocation in fg.GetValidMemoryLocations())
+            {
+                fileDataMap.Add(memoryLocation, new WaveformFile());  // put placeholder blank waveforms in the fileDataMap
+                WaveformList.Items.Add(memoryLocation);  // add each valid memory location to the list box
+            }
+            for (int i = 1; i <= fg.GetNumChannels(); i++)
+            {
+                RadioButton rb = new RadioButton() { Content = "Channel " + i, IsChecked = i == 0 };
+                rb.Checked += (sender, args) =>
+                {
+                    int checkedChannel = (int)(sender as RadioButton).Tag;
+                    functionGeneratorChannelInFocus = checkedChannel;
+                    if (channelsPlaying.Contains(checkedChannel))
+                    {
+                        PlayWaveform.Content = "Restart Waveform";
+                    }
+                    else
+                    {
+                        PlayWaveform.Content = "Play Waveform";
+                    }
+                    ChannelChanged();
+                };
+                rb.Unchecked += (sender, args) => { };  // currently no events need to be triggered on an un-check
+                rb.Tag = i;
+                FunctionGenChannelButtonStackPanel.Children.Add(rb);
+            }
+            (FunctionGenChannelButtonStackPanel.Children[0] as RadioButton).IsChecked = true;  // set channel 1 to be checked by default
+            if (maximumAllowedAmplitude <= 0 || maximumAllowedAmplitude > fg.GetMaxSupportedVoltage() - fg.GetMinSupportedVoltage())
+            // if the maximumAllowedAmplitude setting is below (or equals for sanity checking) 0, OR it's set to something too large then
+            // we just set it to be the maximum allowed amplitude of the function generator itself.
+            {
+                maximumAllowedAmplitude = fg.GetMaxSupportedVoltage() - fg.GetMinSupportedVoltage();
+            }
+            // these get forced into being symmetrical. That is okay in my opinion. I don't think there are any function generators with
+            // non-symmetrical voltage limits
+            minVoltageMark.Content = -1 * maximumAllowedAmplitude / 2 + "V";
+            maxVoltageMark.Content = "+" + maximumAllowedAmplitude / 2 + "V";  // set the graph's max and min labels to be what the used function
+            // generator's max and min supported voltages actually are.
+
+            // if the max or min voltage is a three digit or more number, the numbers overlap with the graph. This will likely never be a problem
+
+
+
             // These Axes form the background grid of the oscope display.
 
             Color backgroundColor = (Color)Background.GetValue(SolidColorBrush.ColorProperty);
@@ -415,6 +459,7 @@ namespace UnifiedTestSuiteApp
             double triggerLineScaled = (scope.GetTriggerLevel() * currentYScale) - (currentYScale / 2);
             WaveformPlot.Model.Series.Add(triggerLine);
             WaveformPlot.Model.InvalidatePlot(true);
+
         }
 
         private void ExitAll()
