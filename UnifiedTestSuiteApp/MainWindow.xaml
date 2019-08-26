@@ -15,19 +15,19 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="132" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="18,446,0,0" Width="105">
-            <StackPanel x:Name="ChannelButtonStackPanel" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105">
+            <StackPanel x:Name="OscilloscopeChannelButtonStackPanel" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105">
 
             </StackPanel>
         </ScrollViewer>
         <Label Name="PointsRead" Content="0" HorizontalAlignment="Left" Margin="727,355,0,0" VerticalAlignment="Top" Width="65" Height="26"/>
         <oxy:PlotView Name="WaveformPlot" Margin="58,446,296,-264" Background="WhiteSmoke" Height="464" VerticalAlignment="Top"/>
         <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="132" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="62,469,0,0" Width="0">
-            <StackPanel Name ="ChannelScaleStackPanel" Orientation="Horizontal">
+            <StackPanel Name ="OscilloscopeChannelScaleStackPanel" Orientation="Horizontal">
 
             </StackPanel>
         </ScrollViewer>
         <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="132" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="58,498,0,0" Width="0">
-            <StackPanel Name ="RadioButtonStackPanel" Orientation="Horizontal"/>
+            <StackPanel Name ="OscilloscopeRadioButtonStackPanel" Orientation="Horizontal"/>
         </ScrollViewer>
         <Button Name="RunButton" Content="Run" HorizontalAlignment="Left" Margin="965,421,0,0" VerticalAlignment="Top" Width="75" Click="RunButton_Click" Height="20"/>
         <Button Name="StopButton" Content="Stop" Margin="1089,421,-82,0" VerticalAlignment="Top" Click="StopButton_Click" HorizontalAlignment="Left" Width="75" Height="20"/>
@@ -59,7 +59,7 @@
         <Button Name="PlayWaveform" Content="Play Waveform" HorizontalAlignment="Left" Margin="5,156,0,0" VerticalAlignment="Top" Width="97" Height="30" Click="Button_Click_PlayWaveform"/>
         <Button Name="StopWaveform" Content="Stop Waveform" HorizontalAlignment="Left" Margin="5,208,0,0" VerticalAlignment="Top" Width="97" Height="30" Click="Button_Click_StopWaveform"/>
         <Button Name="EStop" Content="Emergency Stop" HorizontalAlignment="Left" Margin="5,315,0,0" VerticalAlignment="Top" Width="118" Height="51" Click="Button_Click_EStop"/>
-        <ListBox Name="WaveformList" SelectionMode="Single" Margin="296,14,755,0" MouseDoubleClick="WaveformList_MouseDoubleClick" SelectionChanged="WaveformList_SelectionChanged" ScrollViewer.ScrollChanged="WaveformListOnScroll" Height="184" VerticalAlignment="Top" />
+        <ListBox Name="WaveformList" SelectionMode="Single" Margin="296,14,755,0" MouseDoubleClick="WaveformList_MouseDoubleClick" SelectionChanged="WaveformList_SelectionChanged" Height="184" VerticalAlignment="Top" />
         <Label Content="Waveform Name:" HorizontalAlignment="Left" Margin="495,220,0,0" VerticalAlignment="Top" Width="111" Height="26"/>
         <Label Content="Memory Location:" HorizontalAlignment="Left" Margin="495,251,0,0" VerticalAlignment="Top" Width="111" Height="26"/>
         <Label Content="Sample Rate (Sa/S):" HorizontalAlignment="Left" Margin="489,284,0,0" VerticalAlignment="Top" Width="115" Height="26"/>
