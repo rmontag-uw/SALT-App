@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Test Platform Application" Height="988.6" Width="1229.6" Loaded="Window_Loaded" Background="WhiteSmoke">
 
-    <Grid Background="WhiteSmoke" Height="646" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1194" Margin="47,29,0,0">
+    <Grid Background="WhiteSmoke" Height="915" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1194" Margin="17,11,0,0">
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -34,7 +34,7 @@
         <Label Name="RunLabel" Content="Running" HorizontalAlignment="Left" Margin="1035,446,-7,0" VerticalAlignment="Top" Height="26" Width="54"/>
         <Label Content="Voltage Scale" HorizontalAlignment="Left" Margin="890,5,0,0" VerticalAlignment="Top" Width="89" Height="26"/>
         <ComboBox Name="TimeScalePresetComboBox" Margin="979,61,0,0" IsEditable="False" IsReadOnly="True" SelectionChanged="TimeScalePresetComboBox_SelectionChanged" HorizontalAlignment="Left" Width="163" Height="29" VerticalAlignment="Top"/>
-        <ComboBox Name="MemoryDepthComboBox" Margin="1014,553,0,0" IsEditable="False" IsReadOnly="True" SelectionChanged="MemoryDepthComboBox_SelectionChanged" HorizontalAlignment="Left" Width="138" Height="48" VerticalAlignment="Top"/>
+        <ComboBox Name="MemoryDepthComboBox" Margin="1018,582,0,0" IsEditable="False" IsReadOnly="True" SelectionChanged="MemoryDepthComboBox_SelectionChanged" HorizontalAlignment="Left" Width="138" Height="48" VerticalAlignment="Top" RenderTransformOrigin="0.406,0.567"/>
         <Label Content="Time Scale" HorizontalAlignment="Left" Margin="904,64,0,0" VerticalAlignment="Top" Height="26" Width="66"/>
         <Slider Name="VoltageOffsetSlider" HorizontalAlignment="Left" Margin="986,198,-7,0" VerticalAlignment="Top" Height="21" Width="103" ValueChanged="VoltageOffsetSlider_ValueChanged"/>
         <Slider Name="PositionOffsetSlider" HorizontalAlignment="Left" Margin="986,284,-7,0" VerticalAlignment="Top" Height="21" Width="103" ValueChanged="PositionOffsetSlider_ValueChanged"/>
@@ -49,10 +49,10 @@
         <Label Content="Trigger" Margin="1014,101,-149,0" VerticalAlignment="Top" RenderTransformOrigin="6.237,0.585" Height="26"/>
         <Label Name="TriggerVoltageValue" Content="0.0" HorizontalAlignment="Left" Margin="1014,140,0,0" VerticalAlignment="Top" Height="26" Width="25"/>
         <Button Name="ZeroTriggerVoltage" Content="Zero" HorizontalAlignment="Left" Margin="920,126,0,0" VerticalAlignment="Top" Width="59" Click="ZeroTriggerVoltage_Click" Height="24"/>
-        <Label Content="Memory Depth" HorizontalAlignment="Left" Margin="1010,531,0,0" VerticalAlignment="Top" Width="93" Height="26"/>
-        <Button Name="TriggerSingleButton" Content="Single" HorizontalAlignment="Left" Margin="860,161,0,0" VerticalAlignment="Top" Width="75" Click="TriggerSingleButton_Click" Height="20"/>
-        <Button Name="SaveWaveformCaptureButton" Content="Save Waveform&#xA;      Capture" HorizontalAlignment="Left" Margin="936,345,0,0" VerticalAlignment="Top" Width="104" Click="SaveWaveformCaptureButton_Click" Height="36"/>
-        <Label Name="SavingWaveformCaptureLabel" Content="Saving Deep Memory&#xD;&#xA;         Please Wait" HorizontalAlignment="Left" Margin="1054,345,-113,0" VerticalAlignment="Top" Width="141" Foreground="Red" Height="42"/>
+        <Label Content="Memory Depth" HorizontalAlignment="Left" Margin="1014,560,0,0" VerticalAlignment="Top" Width="93" Height="26"/>
+        <Button Name="TriggerSingleButton" Content="Single" HorizontalAlignment="Left" Margin="1077,498,0,0" VerticalAlignment="Top" Width="75" Click="TriggerSingleButton_Click" Height="20" RenderTransformOrigin="1,10.21"/>
+        <Button Name="SaveWaveformCaptureButton" Content="Save Waveform&#xA;      Capture" HorizontalAlignment="Left" Margin="914,519,0,0" VerticalAlignment="Top" Width="104" Click="SaveWaveformCaptureButton_Click" Height="36"/>
+        <Label Name="SavingWaveformCaptureLabel" Content="Saving Deep Memory&#xD;&#xA;         Please Wait" HorizontalAlignment="Left" Margin="986,683,0,0" VerticalAlignment="Top" Width="141" Foreground="Red" Height="42"/>
         <Canvas Name="waveformGraph" Background="White" Height="200" VerticalAlignment="Top" Margin="495,19,0,0" HorizontalAlignment="Left" Width="300"/>
         <Button Name="CalibrationButton" Content="Calibrate" HorizontalAlignment="Left" Margin="155,23,0,0" VerticalAlignment="Top" Width="93" RenderTransformOrigin="0.54,0.07" Click="Button_Click_Calibrate" Height="40"/>
         <Button Name="openWaveformButton" Content="Open Waveform" HorizontalAlignment="Left" Margin="5,21,0,0" VerticalAlignment="Top" Width="97" Height="44" Click="Button_Click_OpenWaveform"/>
