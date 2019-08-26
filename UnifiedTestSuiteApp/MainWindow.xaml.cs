@@ -90,10 +90,11 @@ namespace UnifiedTestSuiteApp
             ResourceManager rm = new ResourceManager();
             var autoEvent = new AutoResetEvent(false);
             var oscilloscopes = VISAOscilloscope.GetConnectedOscilloscopes();
-            if (oscilloscopes.unknownOscilloscopesConnected)
+            var functionGenerators = VISAFunctionGenerator.GetConnectedFunctionGenerators();
+            if (oscilloscopes.unknownOscilloscopeConnected || functionGenerators.unknownFunctionGeneratorConnected)
             {
-                MessageBoxResult result = MessageBox.Show("Error: Unknown Oscilloscope found." +
-                   "Please replace with a compatible scope and then try again.",
+                MessageBoxResult result = MessageBox.Show("Error: Unknown Device found." +
+                   "Please replace with a compatible scope or function generator and then try again.",
                    appName, MessageBoxButton.OK);
                 switch (result)
                 {
@@ -107,6 +108,19 @@ namespace UnifiedTestSuiteApp
                 // show a messagebox error if there are no scopes connected
                 MessageBoxResult result = MessageBox.Show("Error: No oscilloscopes found. " +
                     "Make sure that the oscilloscope is connected and turned on and then try again",
+                    appName, MessageBoxButton.OK);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:  // there's only one case
+                        ExitAll();  // might cause annoying task cancelled errors, we'll have to deal with those
+                        return;
+                }
+            }
+            if(functionGenerators.connectedFunctionGenerators.Length == 0)
+            {
+                // show a messagebox error if there are no function generators connected
+                MessageBoxResult result = MessageBox.Show("Error: No function generators found. " +
+                    "Make sure that the function generator is connected and turned on and then try again",
                     appName, MessageBoxButton.OK);
                 switch (result)
                 {
@@ -129,6 +143,22 @@ namespace UnifiedTestSuiteApp
             } else
             {
                 scope = oscilloscopes.connectedOscilloscopes[0];  // there's only one, that's the one we use
+            }
+            if (functionGenerators.connectedFunctionGenerators.Length > 1)
+            {
+                MessageBoxResult result = MessageBox.Show("Error: Too many function generators found. " +
+                   "Unplug all but one function generator and then try again",
+                   appName, MessageBoxButton.OK);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:  // there's only one case
+                        ExitAll();  // might cause annoying task cancelled errors, we'll have to deal with those
+                        return;
+                }
+            }
+            else
+            {
+                fg = functionGenerators.connectedFunctionGenerators[0];  // there's only one, that's the one we use
             }
             //IEnumerable<string> resources;
             //try
