@@ -91,18 +91,6 @@ namespace UnifiedTestSuiteApp
             var autoEvent = new AutoResetEvent(false);
             var oscilloscopes = VISAOscilloscope.GetConnectedOscilloscopes();
             var functionGenerators = VISAFunctionGenerator.GetConnectedFunctionGenerators();
-            if (oscilloscopes.unknownOscilloscopeConnected || functionGenerators.unknownFunctionGeneratorConnected)
-            {
-                MessageBoxResult result = MessageBox.Show("Error: Unknown Device found." +
-                   "Please replace with a compatible scope or function generator and then try again.",
-                   appName, MessageBoxButton.OK);
-                switch (result)
-                {
-                    case MessageBoxResult.OK:  // there's only one case
-                        ExitAll();  // might cause annoying task cancelled errors, we'll have to deal with those
-                        return;
-                }
-            }
             if(oscilloscopes.connectedOscilloscopes.Length == 0)
             {
                 // show a messagebox error if there are no scopes connected
