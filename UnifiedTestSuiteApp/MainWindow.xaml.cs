@@ -31,6 +31,7 @@ namespace UnifiedTestSuiteApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string appName = "Test Suite";
         private const int refreshInterval = 100;  // the graph refresh interval in ms
         private static System.Timers.Timer refreshTimer;  // gotta make sure there's no ambiguity with the threading timer
         private static IOscilloscope scope;
@@ -53,6 +54,7 @@ namespace UnifiedTestSuiteApp
         private readonly double triggerPositionScaleConstant;
         private readonly double voltageOffsetScaleConstant;
         private readonly double timeOffsetScaleConstant;
+        private readonly System.Drawing.Color[] channelColors;
         private IFunctionGenerator fg;
         private bool calibration;
         private int functionGeneratorChannelInFocus;
@@ -87,24 +89,65 @@ namespace UnifiedTestSuiteApp
             cancelToken = new CancellationTokenSource();
             ResourceManager rm = new ResourceManager();
             var autoEvent = new AutoResetEvent(false);
-            IEnumerable<string> resources;
-            try
+            var oscilloscopes = VISAOscilloscope.GetConnectedOscilloscopes();
+            if (oscilloscopes.unknownOscilloscopesConnected)
             {
-                resources = rm.Find("USB?*");  // find USB devices
-                foreach (string s in resources)
+                MessageBoxResult result = MessageBox.Show("Error: Unknown Oscilloscope found." +
+                   "Please replace with a compatible scope and then try again.",
+                   appName, MessageBoxButton.OK);
+                switch (result)
                 {
-                    Console.WriteLine(s);  // write out each VISA device found.
-                    // currently this program only works with the first one, and it better be an oscope.
+                    case MessageBoxResult.OK:  // there's only one case
+                        ExitAll();  // might cause annoying task cancelled errors, we'll have to deal with those
+                        return;
                 }
-                scope = new DS1054Z(resources.FirstOrDefault(), rm);  // init the DS1054Z
-                // gotta think about autoscaling on startup. More research on how well the scope's autoset function performs is required
-
             }
-            catch (Exception ex)  // if no devices are found, throw an error and quit
+            if(oscilloscopes.connectedOscilloscopes.Length == 0)
             {
-                Console.WriteLine(ex.Message);
-                return;
+                // show a messagebox error if there are no scopes connected
+                MessageBoxResult result = MessageBox.Show("Error: No oscilloscopes found. " +
+                    "Make sure that the oscilloscope is connected and turned on and then try again",
+                    appName, MessageBoxButton.OK);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:  // there's only one case
+                        ExitAll();  // might cause annoying task cancelled errors, we'll have to deal with those
+                        return;
+                }
             }
+            if(oscilloscopes.connectedOscilloscopes.Length > 1)
+            {
+                MessageBoxResult result = MessageBox.Show("Error: Too many oscilloscopes found. " +
+                   "Unplug all but one oscilloscope and then try again",
+                   appName, MessageBoxButton.OK);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:  // there's only one case
+                        ExitAll();  // might cause annoying task cancelled errors, we'll have to deal with those
+                        return;
+                }
+            } else
+            {
+                scope = oscilloscopes.connectedOscilloscopes[0];  // there's only one, that's the one we use
+            }
+            //IEnumerable<string> resources;
+            //try
+            //{
+            //    resources = rm.Find("USB?*");  // find USB devices
+            //    foreach (string s in resources)
+            //    {
+            //        Console.WriteLine(s);  // write out each VISA device found.
+            //        // currently this program only works with the first one, and it better be an oscope.
+            //    }
+            //    scope = new DS1054Z(resources.FirstOrDefault(), rm);  // init the DS1054Z
+            //    // gotta think about autoscaling on startup. More research on how well the scope's autoset function performs is required
+
+            //}
+            //catch (Exception ex)  // if no devices are found, throw an error and quit
+            //{
+            //    Console.WriteLine(ex.Message);
+            //    return;
+            //}
             scope.Run();  // start the scope
             scopeChannelInFocus = 1;  // start with channel 1 in focus for the scope
             InitializeComponent();  // ALL THINGS THAT ACTUALLY CHANGE UI PROPERTIES HAVE TO GO UNDER THIS
@@ -146,8 +189,14 @@ namespace UnifiedTestSuiteApp
             channelsToDraw.Add(1);  // we enable graphing channel 1 by default
             channelGraphs = new LineSeries[numOscilloscopeChannels];  // init the channelGraphs arrray
             voltageAxes = new LinearAxis[numOscilloscopeChannels];  // get an axis for each input channel of the scope
+            channelColors = new System.Drawing.Color[numOscilloscopeChannels];
             mappedVoltageScales = scope.GetVoltageScalePresets();
             mappedTimeScales = scope.GetTimeScalePresets();
+            for (int i = 0; i < numOscilloscopeChannels; i++)  // this application does not respond to runtime changes in channel color
+                                                               // I have never heard of a scope that does that but just for reference.
+            {
+                channelColors[i] = scope.GetChannelColor(i + 1);  // we save the channel colors so we don't need to access them again
+            }
             foreach (string s in scope.GetVoltageScalePresetStrings())
             {
                 VoltageScalePresetComboBox.Items.Add(s);
@@ -350,9 +399,14 @@ namespace UnifiedTestSuiteApp
             WaveformPlot.Model.InvalidatePlot(true);
         }
 
+        private void ExitAll()
+        {
+            System.Diagnostics.Process.GetCurrentProcess().Kill();  // a bit brutal but it works
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            InitializeFG();  // after the window is loaded, attempt to initialize the function generator
+            //InitializeFG();  // after the window is loaded, attempt to initialize the function generator
             Line zeroLine = new Line  // draw the line that marks 0V
             {
                 Stroke = Brushes.White,
@@ -365,6 +419,7 @@ namespace UnifiedTestSuiteApp
             SetRefreshTimer();
         }
 
+       
 
         // FUNCTION GENERATOR STUFF
 
@@ -1184,7 +1239,7 @@ namespace UnifiedTestSuiteApp
             {
 
                 // spin graph drawing off into seperate thread
-                ThreadPool.QueueUserWorkItem(state => DrawGraph(channel, scope.GetChannelColor(channel)));
+                ThreadPool.QueueUserWorkItem(state => DrawGraph(channel, channelColors[channel-1]));
             }
         }
 

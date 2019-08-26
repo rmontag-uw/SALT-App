@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        Title="Test Platform Application" Height="988.6" Width="1229.6" Loaded="Window_Loaded" Background="WhiteSmoke">
+        Title="Test Platform Application" Height="800" Width="1200" Loaded="Window_Loaded" Background="WhiteSmoke">
 
-    <Grid Background="WhiteSmoke" Height="915" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1194" Margin="17,11,0,0">
+    <Grid Background="WhiteSmoke" Height="750" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1182" Margin="17,11,-3.8,0">
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -20,7 +20,7 @@
             </StackPanel>
         </ScrollViewer>
         <Label Name="PointsRead" Content="0" HorizontalAlignment="Left" Margin="727,355,0,0" VerticalAlignment="Top" Width="65" Height="26"/>
-        <oxy:PlotView Name="WaveformPlot" Margin="58,446,296,-264" Background="WhiteSmoke" Height="464" VerticalAlignment="Top"/>
+        <oxy:PlotView Name="WaveformPlot" Margin="334,421,324,0" Background="WhiteSmoke" Height="295" VerticalAlignment="Top"/>
         <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="132" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="62,469,0,0" Width="0">
             <StackPanel Name ="OscilloscopeChannelScaleStackPanel" Orientation="Horizontal">
 
