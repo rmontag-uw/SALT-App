@@ -34,7 +34,7 @@ namespace UnifiedTestSuiteApp
         private const string appName = "Test Suite";
         private const int refreshInterval = 100;  // the graph refresh interval in ms
         private static System.Timers.Timer refreshTimer;  // gotta make sure there's no ambiguity with the threading timer
-        private static IOscilloscope scope;
+        private readonly IOscilloscope scope;
         private TextWriter currentLogFile;  // a little bit gross, but overall actually a fine solution
         private int scopeChannelInFocus;
         private readonly HashSet<int> channelsToDisable;
@@ -55,7 +55,7 @@ namespace UnifiedTestSuiteApp
         private readonly double voltageOffsetScaleConstant;
         private readonly double timeOffsetScaleConstant;
         private readonly System.Drawing.Color[] channelColors;
-        private IFunctionGenerator fg;
+        private readonly IFunctionGenerator fg;
         private bool calibration;
         private int functionGeneratorChannelInFocus;
         private bool openingFile;  // true if the user is opening a file
@@ -148,32 +148,14 @@ namespace UnifiedTestSuiteApp
             {
                 fg = functionGenerators.connectedFunctionGenerators[0];  // there's only one, that's the one we use
             }
-            //IEnumerable<string> resources;
-            //try
-            //{
-            //    resources = rm.Find("USB?*");  // find USB devices
-            //    foreach (string s in resources)
-            //    {
-            //        Console.WriteLine(s);  // write out each VISA device found.
-            //        // currently this program only works with the first one, and it better be an oscope.
-            //    }
-            //    scope = new DS1054Z(resources.FirstOrDefault(), rm);  // init the DS1054Z
-            //    // gotta think about autoscaling on startup. More research on how well the scope's autoset function performs is required
-
-            //}
-            //catch (Exception ex)  // if no devices are found, throw an error and quit
-            //{
-            //    Console.WriteLine(ex.Message);
-            //    return;
-            //}
+     
             scope.Run();  // start the scope
             scopeChannelInFocus = 1;  // start with channel 1 in focus for the scope
-            InitializeComponent();  // ALL THINGS THAT ACTUALLY CHANGE UI PROPERTIES HAVE TO GO UNDER THIS
+            InitializeComponent();
+
             WaveformLoadMessage.Visibility = Visibility.Hidden;  // hide the "waveform loading please wait" message
             WaveformUploadMessage.Visibility = Visibility.Hidden;  // hide the "uploading waveform please wait" message
             waveformGraph.Background = Brushes.Black;  // set the canvas background to black
-                                                       // ch1.IsChecked = true;  // start with channel 1 being checked, and therefore the default channel used
-
             WaveformSampleRate.IsReadOnly = true;  // make the sample rate textbox read only by default
             WaveformAmplitudeScaleFactor.IsReadOnly = true;   // make the scale factor textbox read only
             cancelFileOpen.Visibility = Visibility.Hidden;  // hide the button for canceling file upload
@@ -192,7 +174,7 @@ namespace UnifiedTestSuiteApp
             SaveWaveformParameters.IsEnabled = false; // disable the save waveform parameters button
             WaveformSaveInstructionLabel.Visibility = Visibility.Hidden;  // hide the instruction label for saving waveform
             voltageOffsetScaleConstant = scope.GetVoltageOffsetScaleConstant();
-            triggerPositionScaleConstant = scope.GetTriggerPositionScaleConstant();
+            triggerPositionScaleConstant = scope.GetTriggerPositionScaleConstant();  // get the graph constants from the scope
             timeOffsetScaleConstant = scope.GetTimeOffsetScaleConstant();
             SavingWaveformCaptureLabel.Visibility = Visibility.Hidden; // hide the "saving waveform please wait" label
             showTriggerLine = false;  // start by not showing the dashed line for the trigger
@@ -215,17 +197,17 @@ namespace UnifiedTestSuiteApp
             {
                 channelColors[i] = scope.GetChannelColor(i + 1);  // we save the channel colors so we don't need to access them again
             }
-            foreach (string s in scope.GetVoltageScalePresetStrings())
+            foreach (string s in scope.GetVoltageScalePresetStrings())  // add all supported voltage scale presets to the combobox of voltage scales
             {
                 VoltageScalePresetComboBox.Items.Add(s);
             }
-            foreach (string s in scope.GetTimeScalePresetStrings())
+            foreach (string s in scope.GetTimeScalePresetStrings())  // add all supported time scale presets to the combobox of time scales
             {
                 TimeScalePresetComboBox.Items.Add(s);
             }
             MemoryDepthComboBox.Items.Add("AUTO");  // add the auto option first
             int[] tempAllowedMemDepths = scope.GetAllowedMemDepths();
-            foreach (int i in tempAllowedMemDepths)
+            foreach (int i in tempAllowedMemDepths)  // add all supported memory depths to the combobox of memory depths
             {
                 MemoryDepthComboBox.Items.Add(i);
             }
@@ -243,11 +225,11 @@ namespace UnifiedTestSuiteApp
                     IsChecked = false,
                     FlowDirection = FlowDirection.RightToLeft,
                 };
-                rb.Checked += (sender, args) =>
+                rb.Checked += (sender, args) =>  // on channel change, switch the displayed scale to the scale for that channel
                 {
                     int checkedChannel = (int)(sender as RadioButton).Tag;
                     scopeChannelInFocus = checkedChannel;
-                    double offset = scope.GetVerticalOffset(scopeChannelInFocus);
+                    double offset = scope.GetVerticalOffset(scopeChannelInFocus);  // and set the displayed offset to the offset of that channel
                     VoltageOffsetSlider.Value = offset;
                     previousYScaleFactor = scope.GetYScale(scopeChannelInFocus);
                     int channelChangedVoltageScaleCheck = Array.IndexOf(mappedVoltageScales, previousYScaleFactor);
@@ -599,9 +581,6 @@ namespace UnifiedTestSuiteApp
                 //EditWaveformParameterCheckbox.IsEnabled = true;  // enable the edit waveform parameter checkbox
 
             }
-            //DrawFGWaveformGraph();
-            // remove DrawFGWaveformGraph() call from here.
-
         }
 
         private void Button_Click_PlayWaveform(object sender, RoutedEventArgs e)
@@ -656,7 +635,7 @@ namespace UnifiedTestSuiteApp
 
         private void ParseFileHandler(string filePath)
         {
-            var t = new Thread(() => ParseFile(filePath));
+            var t = new Thread(() => ParseFile(filePath));  // spin off a new thread for file parsing
             t.Start();
         }
 
@@ -665,10 +644,7 @@ namespace UnifiedTestSuiteApp
 
             double sampleRate = 844;  // default samplerate
             string fileName = System.IO.Path.GetFileName(filePath);
-            //(string path, System.IO.FileMode mode, System.IO.FileAccess access, 
-            //   System.IO.FileShare share, int bufferSize, System.IO.FileOptions options);
             var fileLines = File.ReadLines(filePath);
-            //long length = fileLines.Count();
             if (fileLines.First().StartsWith("samplerate="))
             {
                 sampleRate = double.Parse(fileLines.First().Substring(11));  // parse the sampleRate
@@ -676,8 +652,6 @@ namespace UnifiedTestSuiteApp
             }
             double[] voltageArray = fileLines.AsParallel().AsOrdered().Select(line => double.Parse(line)).ToArray();
             // parse to an IEnumerable of doubles, using Parallel processing, but preserving the order
-            //Console.WriteLine("removing DC offset");
-            //Console.WriteLine("Initial voltages");
             if (voltageArray.AsParallel().Max() - voltageArray.AsParallel().Min() > maximumAllowedAmplitude)  // amplitude is too high
             {
                 // signal the UI thread to display the error/warning
@@ -1002,15 +976,8 @@ namespace UnifiedTestSuiteApp
                     WaveformUploadedCallback();
                 }
             });
-
-            // spin the uploading into a new thread using the threadPool
-
-            // fg.UploadWaveformData(data.Voltages, data.SampleRate, 
-            //   (data.Voltages.Max() + data.Voltages.Min())/2, 0, (string) WaveformList.SelectedItem);
-            // currentWaveform.IsUploaded = true;  // set the isuploaded flag to true
-            // LoadWaveformButton.IsEnabled = true;  // show the button that allows loading uploaded waveforms into active memory
             ListBoxItem item = WaveformList.ItemContainerGenerator.ContainerFromItem(WaveformList.SelectedItem) as ListBoxItem;
-            item.Background = Brushes.Green;
+            item.Background = Brushes.Green;  // set the background so the user knows that the waveform has been uploaded
             currentWaveform.IsUploaded = true;  // stuff uses this flag
         }
 
@@ -1213,12 +1180,12 @@ namespace UnifiedTestSuiteApp
 
         private void WaveformScaleFactor_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            // currently do nothing on this event
         }
 
         private void WaveformSampleRate_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            // currently do nothing on this event
         }
 
         class WaveformFile
@@ -1273,6 +1240,8 @@ namespace UnifiedTestSuiteApp
                 // constructor chaining in C# is weird.
             }
         }
+
+
         // OSCILLOSCOPE STUFF
 
         private void SetRefreshTimer()  // enable the refresh timer which every (interval) ms, grabs new wave data and updates the graph
