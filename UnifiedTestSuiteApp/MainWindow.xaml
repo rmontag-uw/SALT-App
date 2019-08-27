@@ -40,14 +40,14 @@
         <Slider Name="PositionOffsetSlider" HorizontalAlignment="Left" Margin="986,284,-7,0" VerticalAlignment="Top" Height="21" Width="103" ValueChanged="PositionOffsetSlider_ValueChanged"/>
         <Label Content="Voltage Offset" HorizontalAlignment="Left" Margin="990,172,0,0" VerticalAlignment="Top" Height="26" Width="85"/>
         <Label Content="Position Offset" HorizontalAlignment="Left" Margin="984,253,0,0" VerticalAlignment="Top" Height="26" Width="87"/>
-        <Label Name="VoltageOffsetValue" Content="0.0" HorizontalAlignment="Left" Margin="1014,219,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
-        <Label Name="PositionOffsetValue" Content="0.0" HorizontalAlignment="Left" Margin="1015,303,0,0" VerticalAlignment="Top" Height="26" Width="40"/>
+        <Label Name="VoltageOffsetValue" Content="0.0" HorizontalAlignment="Left" Margin="1014,219,0,0" VerticalAlignment="Top" Height="26" Width="75"/>
+        <Label Name="PositionOffsetValue" Content="0.0" HorizontalAlignment="Left" Margin="1015,303,0,0" VerticalAlignment="Top" Height="26" Width="60"/>
         <Button Name="ZeroVoltageOffset" Content="Zero" HorizontalAlignment="Left" Margin="921,198,0,0" VerticalAlignment="Top" Width="59" Click="ZeroVoltageOffset_Click" Height="24"/>
         <Button Name="ZeroPositionOffset" Content="Zero" HorizontalAlignment="Left" Margin="920,282,0,0" VerticalAlignment="Top" Width="59" Click="ZeroPositionOffset_Click" Height="24"/>
         <CheckBox Name="TriggerCheckBox" Content="Show Trigger" HorizontalAlignment="Left" Margin="936,479,0,0" VerticalAlignment="Top" Checked="TriggerCheckBox_Checked" Unchecked="TriggerCheckBox_Unchecked" Height="15" Width="89"/>
         <Slider Name="TriggerSlider" HorizontalAlignment="Left" Margin="986,125,-7,0" VerticalAlignment="Top" Height="21" Width="103" ValueChanged="TriggerSlider_ValueChanged"/>
         <Label Content="Trigger" Margin="1006,101,107,0" VerticalAlignment="Top" RenderTransformOrigin="6.237,0.585" Height="26"/>
-        <Label Name="TriggerVoltageValue" Content="0.0" HorizontalAlignment="Left" Margin="1014,140,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
+        <Label Name="TriggerVoltageValue" Content="0.0" HorizontalAlignment="Left" Margin="1014,140,0,0" VerticalAlignment="Top" Height="26" Width="61"/>
         <Button Name="ZeroTriggerVoltage" Content="Zero" HorizontalAlignment="Left" Margin="920,126,0,0" VerticalAlignment="Top" Width="59" Click="ZeroTriggerVoltage_Click" Height="24"/>
         <Label Content="Memory Depth" HorizontalAlignment="Left" Margin="1014,560,0,0" VerticalAlignment="Top" Width="93" Height="26"/>
         <Button Name="TriggerSingleButton" Content="Single" HorizontalAlignment="Left" Margin="1067,479,0,0" VerticalAlignment="Top" Width="75" Click="TriggerSingleButton_Click" Height="20" RenderTransformOrigin="1,10.21"/>

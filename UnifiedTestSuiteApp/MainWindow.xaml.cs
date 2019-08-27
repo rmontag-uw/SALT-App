@@ -1493,12 +1493,12 @@ namespace UnifiedTestSuiteApp
                     double Yinc = scope.GetYIncrement();
                     double Yref = scope.GetYReference();
                     double xInc = scope.GetXIncrement();
-                    byte[] data = scope.GetDeepMemData(scopeChannelInFocus);
-                    if (data.Length > memDepth)  // idk why this happens
-                    {
-                        IEnumerable<byte> temp = data.Skip(data.Length - memDepth);  // we skip corrupted values at the beginning of the capture if there are any
-                        data = temp.ToArray();  // this problem has likely been resolved.
-                    }
+                    double[] voltages = scope.GetDeepMemVoltages(scopeChannelInFocus);
+                    //if (data.Length > memDepth)  // idk why this happens
+                    //{
+                    //    IEnumerable<byte> temp = data.Skip(data.Length - memDepth);  // we skip corrupted values at the beginning of the capture if there are any
+                    //    data = temp.ToArray();  // this problem has likely been resolved.
+                    //}
                     string directoryPath = Directory.GetCurrentDirectory() + "\\captures";
                     Directory.CreateDirectory(directoryPath);  // if the captures directory doesn't exist
                                                                // create it as a subdirectory of whatever current directory the program is located in
@@ -1507,10 +1507,10 @@ namespace UnifiedTestSuiteApp
                     // create a timestamped log file
                     currentLogFile.WriteLine("channel,voltage,timestamp");  // write the header of the CSV file
 
-                    for (int i = 0; i < data.Length; i++)  // this might be better suited for parallelism
+                    for (int i = 0; i < voltages.Length; i++)  // this might be better suited for parallelism
                     {
-                        double voltage = (data[i] - YOrigin - Yref) * Yinc;  // we calculate it and write it out to the current log file
-                        currentLogFile.WriteLine(scopeChannelInFocus + "," + voltage + "," + (xInc * i));
+                        // we write out the voltages to the file along with a relative timestamp for each calculated from the x increment
+                        currentLogFile.WriteLine(scopeChannelInFocus + "," + voltages[i] + "," + (xInc * i));
                     }
                     currentLogFile.Flush();  // make sure stuff actually gets written out, even before the program is closed
                     currentLogFile.Close();
