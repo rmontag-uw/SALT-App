@@ -1278,11 +1278,13 @@ namespace UnifiedTestSuiteApp
                 double[] waveData;
                 double currentScale;
                 double triggerLevel;
+                double voltageOffset;
                 lock (graphLock)  // for when we're trying to graph multiple channels at a time
                 {
                     waveData = scope.GetWaveVoltages(channelParam);  // grab the point data from the scope for the given channel
                     currentScale = scope.GetYScale();  // get the voltage scale
                     triggerLevel = scope.GetTriggerLevel();
+                    voltageOffset = scope.GetVerticalOffset(channelParam);
                 }
                 if (Application.Current == null)  // avoid weird errors on application close
                 {
@@ -1295,7 +1297,7 @@ namespace UnifiedTestSuiteApp
 
                 });
 
-                double[] screenPositionArray = waveData.Select(dataPoint => ScaleVoltage(dataPoint, currentScale)).ToArray();
+                double[] screenPositionArray = waveData.Select(dataPoint => ScaleVoltage(dataPoint, currentScale, voltageOffset)).ToArray();
 
                 LineSeries temp = new LineSeries
                 {
@@ -1352,9 +1354,9 @@ namespace UnifiedTestSuiteApp
             }
         }
 
-        private double ScaleVoltage(double voltagePoint, double scale)
+        private double ScaleVoltage(double voltagePoint, double scale, double voltageOffset)
         {
-            double fractionalScaled = (voltagePoint + ((voltageOffsetScaleConstant / 2) * scale)) / (voltageOffsetScaleConstant * scale);
+            double fractionalScaled = (voltageOffset + voltagePoint + ((voltageOffsetScaleConstant / 2) * scale)) / (voltageOffsetScaleConstant * scale);
             double screenValue = (fractionalScaled * scale) - (scale / 2);  // multiply the fractional value by the voltage scale from the scope
             return screenValue;
         }
