@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FunctionGeneratorAPI">
+      <HintPath>..\..\testbedProgram\TestSuiteInterface\bin\Release\netstandard2.0\FunctionGeneratorAPI.dll</HintPath>
+    </Reference>
     <Reference Include="Ivi.Visa, Version=5.11.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\testbedProgram\TestSuiteInterface\bin\Release\netstandard2.0\Ivi.Visa.dll</HintPath>
@@ -70,9 +73,6 @@
     </Reference>
     <Reference Include="TestAndMeasurementInterface">
       <HintPath>..\..\TestAndMeasurementInterface\TestAndMeasurementInterface\bin\Release\netstandard2.0\TestAndMeasurementInterface.dll</HintPath>
-    </Reference>
-    <Reference Include="TestSuiteInterface">
-      <HintPath>..\..\testbedProgram\TestSuiteInterface\bin\Release\netstandard2.0\TestSuiteInterface.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
