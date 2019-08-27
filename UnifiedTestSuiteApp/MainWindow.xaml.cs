@@ -56,7 +56,7 @@ namespace UnifiedTestSuiteApp
         private bool openingFile;  // true if the user is opening a file
         private string memoryLocationSelected;
         private readonly HashSet<int> channelsPlaying;
-        private double maximumAllowedAmplitude = 1;  // set to -1 to allow amplitudes up to the function generator's maximum
+        private readonly double maximumAllowedAmplitude = 1;  // set to -1 to allow amplitudes up to the function generator's maximum
         // Because the IntitializeFG method is different than the constructor, we can't even make this readonly.
         // this value should NOT ever be changed at runtime, that would be insane. if it's -1 set it to what it needs to be in the
         // InitializeFG method and leave it at that.
