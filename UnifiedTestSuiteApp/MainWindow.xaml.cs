@@ -145,6 +145,7 @@ namespace UnifiedTestSuiteApp
             }
      
             scope.Run();  // start the scope
+            fg.SetAllOutputsOff();  // turn off all the outputs of the function generator
             scopeChannelInFocus = 1;  // start with channel 1 in focus for the scope
             InitializeComponent();
 
