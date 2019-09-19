@@ -51,6 +51,8 @@ namespace UnifiedTestSuiteApp
         private readonly double timeOffsetScaleConstant;
         private readonly System.Drawing.Color[] channelColors;
         private readonly IFunctionGenerator fg;
+        private LineSeries FGWaveformGraphZeroLine;
+        private LineSeries FGWaveformGraphDataLine;
         private bool calibration;
         private int functionGeneratorChannelInFocus;
         private bool openingFile;  // true if the user is opening a file
@@ -151,7 +153,7 @@ namespace UnifiedTestSuiteApp
 
             WaveformLoadMessage.Visibility = Visibility.Hidden;  // hide the "waveform loading please wait" message
             WaveformUploadMessage.Visibility = Visibility.Hidden;  // hide the "uploading waveform please wait" message
-            waveformGraph.Background = Brushes.Black;  // set the canvas background to black
+          //  waveformGraph.Background = Brushes.Black;  // set the canvas background to black
             WaveformSampleRate.IsReadOnly = true;  // make the sample rate textbox read only by default
             WaveformAmplitudeScaleFactor.IsReadOnly = true;   // make the scale factor textbox read only
             cancelFileOpen.Visibility = Visibility.Hidden;  // hide the button for canceling file upload
@@ -185,6 +187,11 @@ namespace UnifiedTestSuiteApp
             channelsToDraw.Add(1);  // we enable graphing channel 1 by default
             channelGraphs = new LineSeries[numOscilloscopeChannels];  // init the channelGraphs arrray
             voltageAxes = new LinearAxis[numOscilloscopeChannels];  // get an axis for each input channel of the scope
+            FGWaveformPlot.Model = new PlotModel();
+            FGWaveformGraphDataLine = new LineSeries() { Color = OxyColor.FromRgb(34, 139, 34) };
+            FGWaveformGraphZeroLine = new LineSeries() { Color = OxyColor.FromRgb(0,0,0)};  // zero line is black
+            FGWaveformPlot.Model.Series.Add(FGWaveformGraphZeroLine);
+            FGWaveformPlot.Model.Series.Add(FGWaveformGraphDataLine);
             channelColors = new System.Drawing.Color[numOscilloscopeChannels];
             mappedVoltageScales = scope.GetVoltageScalePresets();
             mappedTimeScales = scope.GetTimeScalePresets();
@@ -340,18 +347,40 @@ namespace UnifiedTestSuiteApp
             }
             // these get forced into being symmetrical. That is okay in my opinion. I don't think there are any function generators with
             // non-symmetrical voltage limits
-            minVoltageMark.Content = -1 * maximumAllowedAmplitude / 2 + "V";
-            maxVoltageMark.Content = "+" + maximumAllowedAmplitude / 2 + "V";  // set the graph's max and min labels to be what the used function
-            // generator's max and min supported voltages actually are.
+      
+            Color backgroundColor = (Color)Background.GetValue(SolidColorBrush.ColorProperty);
+            OxyColor hiddenColor = OxyColor.FromArgb(0, backgroundColor.R, backgroundColor.G, backgroundColor.B);
 
-            // if the max or min voltage is a three digit or more number, the numbers overlap with the graph. This will likely never be a problem
+            // This axis is the voltage axis for the FG waveform display
+            LinearAxis FGWaveformVoltageAxis = new LinearAxis
+            {
+                Minimum = -1 * maximumAllowedAmplitude / 2, 
+                // set the graph's max and min labels to be what the used function generator's max and min supported voltages actually are.
+                Maximum = maximumAllowedAmplitude / 2,
+                IsPanEnabled = false,
+                IsZoomEnabled = false,
+                Position = AxisPosition.Left,
+                Title = "Voltage"
+            };
 
+            // This axis is just here to make sure that the bottom axis has no ticks or number labels 
+            LinearAxis FGWaveformBottomAxis = new LinearAxis
+            {
+
+                IsPanEnabled = false,
+                IsZoomEnabled = false,
+                IsAxisVisible = false,
+                TickStyle = TickStyle.None,
+                TextColor = hiddenColor,  // makes it look rectangular at startup while still having no visible numbers on the bottom. 
+                Position = AxisPosition.Bottom
+            };
+            FGWaveformPlot.Model.Axes.Add(FGWaveformVoltageAxis);
+            FGWaveformPlot.Model.Axes.Add(FGWaveformBottomAxis);
 
 
             // These Axes form the background grid of the oscope display.
 
-            Color backgroundColor = (Color)Background.GetValue(SolidColorBrush.ColorProperty);
-            OxyColor hiddenColor = OxyColor.FromArgb(0, backgroundColor.R, backgroundColor.G, backgroundColor.B);
+           
             LinearAxis horizGridAxis1 = new LinearAxis  // make horizontal grid lines
             {
                 Position = AxisPosition.Left,  // no actual axis bar on the side plz
@@ -437,7 +466,6 @@ namespace UnifiedTestSuiteApp
             double triggerLineScaled = (scope.GetTriggerLevel() * currentYScale) - (currentYScale / 2);
             WaveformPlot.Model.Series.Add(triggerLine);
             WaveformPlot.Model.InvalidatePlot(true);
-
         }
 
         private void ExitAll()
@@ -448,15 +476,7 @@ namespace UnifiedTestSuiteApp
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //InitializeFG();  // after the window is loaded, attempt to initialize the function generator
-            Line zeroLine = new Line  // draw the line that marks 0V
-            {
-                Stroke = Brushes.White,
-                X1 = 0,
-                X2 = waveformGraph.ActualWidth,
-                Y1 = waveformGraph.ActualHeight / 2,  // we mark it at exactly the halfway mark of the canvas/graph
-                Y2 = waveformGraph.ActualHeight / 2
-            };
-            waveformGraph.Children.Add(zeroLine);
+            DrawFGWaveformGraph(null);  // just to draw the zero line on the function gen graph before startup
             SetRefreshTimer();
         }
 
@@ -474,80 +494,93 @@ namespace UnifiedTestSuiteApp
         // Draws the waveform contained in the given WaveformFile on the app's graph canvas
         private void DrawFGWaveformGraph(WaveformFile wave)
         {
-            waveformGraph.Children.Clear();  // clear the waveform already on the canvas
-            Line zeroLine = new Line  // draw the line that marks 0V
-            {
-                Stroke = Brushes.White,
-                X1 = 0,
-                X2 = waveformGraph.ActualWidth,
-                Y1 = waveformGraph.ActualHeight / 2,  // we mark it at exactly the halfway mark of the canvas/graph
-                Y2 = waveformGraph.ActualHeight / 2
-            };
-            waveformGraph.Children.Add(zeroLine);
+            int length;
+            FGWaveformGraphDataLine.Points.Clear();
             if (wave == null || wave.FileName == null)  // if there's nothing actually saved in the current waveform, just draw the reference
                                                         // line for 0V and then return
             {
+                FGWaveformGraphZeroLine.Points.Clear();
+                FGWaveformGraphZeroLine.Points.Add(new DataPoint(0, 0));
+                FGWaveformGraphZeroLine.Points.Add(new DataPoint(FGWaveformPlot.ActualWidth, 0));
+                FGWaveformPlot.Model.InvalidatePlot(true);
                 return;
             }
+            if(wave.Voltages.Length > 1000)
+            {
+                length = 1000;
+            } else
+            {
+                length = wave.Voltages.Length;
+            }
+            FGWaveformGraphZeroLine.Points.Clear();
+            FGWaveformGraphZeroLine.Points.Add(new DataPoint(0, 0));
+            FGWaveformGraphZeroLine.Points.Add(new DataPoint(length, 0));
+            for (int i = 0; i < length; i++)
+            {
+
+                FGWaveformGraphDataLine.Points.Add(new DataPoint(i,wave.Voltages[i]));
+              
+            }
             // dictionary access is essentially O(1) time so this is fine
-            double incrementXValue;
-            if (wave.Voltages.Length > 1000)  // only show the first 1000 points of the waveform if the waveform is longer than 1000 points
-                                              // this is for the sake of memory usage. A 8000000 pt waveform goes past 2 GB of memory usage.
-            {
-                incrementXValue = waveformGraph.ActualWidth / 1000;
-            }
-            else
-            {
-                incrementXValue = waveformGraph.ActualWidth / wave.Voltages.Length;
-            }
-            double YAxisScale = waveformGraph.ActualHeight / maximumAllowedAmplitude;
-            // the scale of the y axis. Scaled between the max and min voltage supported by the current function generator.
-            // the value of x to increment when drawing the points on the graph. Waveforms with more samples will have a smaller increment
-            //size.
+            //double incrementXValue;
+            //if (wave.Voltages.Length > 1000)  // only show the first 1000 points of the waveform if the waveform is longer than 1000 points
+            //                                  // this is for the sake of memory usage. A 8000000 pt waveform goes past 2 GB of memory usage.
+            //{
+            //    incrementXValue = waveformGraph.ActualWidth / 1000;
+            //}
+            //else
+            //{
+            //    incrementXValue = waveformGraph.ActualWidth / wave.Voltages.Length;
+            //}
+            //double YAxisScale = waveformGraph.ActualHeight / maximumAllowedAmplitude;
+            ////the scale of the y axis. Scaled between the max and min voltage supported by the current function generator.
+            ////the value of x to increment when drawing the points on the graph. Waveforms with more samples will have a smaller increment
+            ////size.
 
-            // The vertical axis is easier, because we know that the maximum difference between highest and lowest voltages is 20V.
-            // and since DC offset is removed, we know that the maximum voltage is 10V and the minimum would be -10V, so that's how we'll
-            // set the scale
-            double xPos = 0;  // x position of point to draw
-            double yOffset = 0;
-            double max = wave.Voltages.AsParallel().Max();  // it goes faster with this, causes a CPU spike though.
-            double min = wave.Voltages.AsParallel().Min();  // need this instead of lowLevel/highLevel because of how those levels
-            // get set when amplitude scaling occurs. We want the graph to draw the scaled waveform.
-            // depending on how the DC offset is removed, the bottom points can end up less than -10 or greater than 10
-            // this just shifts them up or down to match the actual amplitude shown on the function generator's screen.
-            if (min < -10)
-            {
-                yOffset = -10 - min;
+            //// The vertical axis is easier, because we know that the maximum difference between highest and lowest voltages is 20V.
+            //// and since DC offset is removed, we know that the maximum voltage is 10V and the minimum would be -10V, so that's how we'll
+            //// set the scale
+            //double xPos = 0;  // x position of point to draw
+            //double yOffset = 0;
+            //double max = wave.Voltages.AsParallel().Max();  // it goes faster with this, causes a CPU spike though.
+            //double min = wave.Voltages.AsParallel().Min();  // need this instead of lowLevel/highLevel because of how those levels
+            //// get set when amplitude scaling occurs. We want the graph to draw the scaled waveform.
+            //// depending on how the DC offset is removed, the bottom points can end up less than -10 or greater than 10
+            //// this just shifts them up or down to match the actual amplitude shown on the function generator's screen.
+            //if (min < -10)
+            //{
+            //    yOffset = -10 - min;
 
-            }
-            if (max > 10)
-            {
-                yOffset = 10 - max;
-            }
-            double constantYoffsetThing = ((waveformGraph.ActualHeight / 2) - YAxisScale * yOffset);
-            // the problem is that we end up with 8 million of these Line objects, which take up a lot of memory
+            //}
+            //if (max > 10)
+            //{
+            //    yOffset = 10 - max;
+            //}
+            //double constantYoffsetThing = ((waveformGraph.ActualHeight / 2) - YAxisScale * yOffset);
+            //// the problem is that we end up with 8 million of these Line objects, which take up a lot of memory
 
-            for (int i = 0; i < wave.Voltages.Length - 1; i++)
-            {
-                if (i > 1000)  // kinda a cheat, but it works, this stops the program from adding more lines past 1000.
-                {
-                    break;
+            //for (int i = 0; i < wave.Voltages.Length - 1; i++)
+            //{
+            //    if (i > 1000)  // kinda a cheat, but it works, this stops the program from adding more lines past 1000.
+            //    {
+            //        break;
 
-                }
-                Line line = new Line
-                {
-                    Stroke = Brushes.LimeGreen,
-                    X1 = xPos,
-                    X2 = xPos + incrementXValue,
-                    // set Y coords
-                    Y1 = (wave.Voltages[i] * -1 * YAxisScale) + constantYoffsetThing, // center the waveform halfway up the canvas
-                    Y2 = (wave.Voltages[i + 1] * -1 * YAxisScale) + constantYoffsetThing,  // center the waveform halfway up the canvas
-                    StrokeThickness = 2
-                };
-                waveformGraph.Children.Add(line);
-                xPos += incrementXValue;  // increment xPos by the set increment value
+            //    }
+            //    Line line = new Line
+            //    {
+            //        Stroke = Brushes.LimeGreen,
+            //        X1 = xPos,
+            //        X2 = xPos + incrementXValue,
+            //        // set Y coords
+            //        Y1 = (wave.Voltages[i] * -1 * YAxisScale) + constantYoffsetThing, // center the waveform halfway up the canvas
+            //        Y2 = (wave.Voltages[i + 1] * -1 * YAxisScale) + constantYoffsetThing,  // center the waveform halfway up the canvas
+            //        StrokeThickness = 2
+            //    };
+            //    waveformGraph.Children.Add(line);
+            //    xPos += incrementXValue;  // increment xPos by the set increment value
 
-            }
+            //}
+            FGWaveformPlot.Model.InvalidatePlot(true);
             if (openingFile)  // if we're in file opening mode
             {
                 WaveformList.IsEnabled = true; // it's best just to wait until the graph is drawn.

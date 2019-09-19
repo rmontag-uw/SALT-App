@@ -53,7 +53,8 @@
         <Button Name="TriggerSingleButton" Content="Single" HorizontalAlignment="Left" Margin="1067,479,0,0" VerticalAlignment="Top" Width="75" Click="TriggerSingleButton_Click" Height="20" RenderTransformOrigin="1,10.21"/>
         <Button Name="SaveWaveformCaptureButton" Content="Save Waveform&#xA;      Capture" HorizontalAlignment="Left" Margin="876,567,0,0" VerticalAlignment="Top" Width="104" Click="SaveWaveformCaptureButton_Click" Height="48"/>
         <Label Name="SavingWaveformCaptureLabel" Content="Saving Deep Memory&#xD;&#xA;         Please Wait" HorizontalAlignment="Left" Margin="986,683,0,0" VerticalAlignment="Top" Width="141" Foreground="Red" Height="42"/>
-        <Canvas Name="waveformGraph" Background="White" Height="200" VerticalAlignment="Top" Margin="495,19,0,0" HorizontalAlignment="Left" Width="300"/>
+        <!--<Canvas Name="waveformGraph" Background="White" Height="200" VerticalAlignment="Top" Margin="495,19,0,0" HorizontalAlignment="Left" Width="300"/>-->
+        <oxy:PlotView Name="FGWaveformPlot" Margin="489,19,0,0" Background="WhiteSmoke" Height="204" Width="371" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <Button Name="CalibrationButton" Content="Calibrate" HorizontalAlignment="Left" Margin="155,23,0,0" VerticalAlignment="Top" Width="93" RenderTransformOrigin="0.54,0.07" Click="Button_Click_Calibrate" Height="40"/>
         <Button Name="openWaveformButton" Content="Open Waveform" HorizontalAlignment="Left" Margin="5,21,0,0" VerticalAlignment="Top" Width="97" Height="44" Click="Button_Click_OpenWaveform"/>
         <Button Name="PlayWaveform" Content="Play Waveform" HorizontalAlignment="Left" Margin="5,156,0,0" VerticalAlignment="Top" Width="97" Height="30" Click="Button_Click_PlayWaveform"/>
@@ -63,12 +64,9 @@
         <Label Content="Waveform Name:" HorizontalAlignment="Left" Margin="495,220,0,0" VerticalAlignment="Top" Width="111" Height="26"/>
         <Label Content="Memory Location:" HorizontalAlignment="Left" Margin="495,251,0,0" VerticalAlignment="Top" Width="111" Height="26"/>
         <Label Content="Sample Rate (Sa/S):" HorizontalAlignment="Left" Margin="489,284,0,0" VerticalAlignment="Top" Width="115" Height="26"/>
-        <Label Name="WaveformName" Content="No Waveform Loaded" HorizontalAlignment="Left" Margin="611,220,0,0" VerticalAlignment="Top" Height="26" Width="124"/>
-        <Label Name="WaveformMemoryLocation" Content="No Waveform Loaded" HorizontalAlignment="Left" Margin="611,251,0,0" VerticalAlignment="Top" Height="26" Width="124"/>
+        <Label Name="WaveformName" Content="No Waveform Loaded" HorizontalAlignment="Left" Margin="611,220,0,0" VerticalAlignment="Top" Height="26" Width="144"/>
+        <Label Name="WaveformMemoryLocation" Content="No Waveform Loaded" HorizontalAlignment="Left" Margin="611,251,0,0" VerticalAlignment="Top" Height="26" Width="144"/>
         <TextBox Name="WaveformSampleRate" Text="No Waveform Loaded" HorizontalAlignment="Left" Margin="614,288,0,0" VerticalAlignment="Top" TextChanged="WaveformSampleRate_TextChanged" PreviewTextInput="PreviewSampleRateInput" Height="18" Width="121"/>
-        <Label Name="maxVoltageMark" Content="+10V" HorizontalAlignment="Left" Margin="442,14,0,0" VerticalAlignment="Top" Height="26" Width="39"/>
-        <Label Name="minVoltageMark" Content="-10V" HorizontalAlignment="Left" Margin="446,205,0,0" VerticalAlignment="Top" Height="26" Width="35"/>
-        <Label x:Name="ZeroVMark" Content="0V" HorizontalAlignment="Left" Margin="456,108,0,0" VerticalAlignment="Top" Height="26" Width="24"/>
         <Button Name="cancelFileOpen" Content="Cancel" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" Width="87" Click="Button_Click_CancelFileOpen" Height="20"/>
         <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="104" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="334,237,0,0" Width="105">
             <StackPanel x:Name="FunctionGenChannelButtonStackPanel" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105">
@@ -77,7 +75,7 @@
         </ScrollViewer>
         <Button Name="UploadWaveform" Content="Upload" HorizontalAlignment="Left" Margin="315,206,0,0" VerticalAlignment="Top" Width="95" Click="UploadWaveform_Click" Height="20"/>
         <Label Name ="WaveformSaveInstructionLabel"  Content="Double Click &#xD;&#xA;on a memory &#xD;&#xA;location to save&#xD;&#xA;your waveform." HorizontalAlignment="Left" Margin="202,90,0,0" VerticalAlignment="Top" Width="97" Height="84"/>
-        <Label Content="Graph view limited to first 1000 points" HorizontalAlignment="Left" Margin="537,1,0,0" VerticalAlignment="Top" Width="227" Height="26"/>
+        <Label Content="Graph view limited to first 1000 points" HorizontalAlignment="Left" Margin="589,1,0,0" VerticalAlignment="Top" Width="227" Height="26"/>
         <Button Name="LoadWaveformButton" Content="Load Waveform" HorizontalAlignment="Left" Margin="114,182,0,0" VerticalAlignment="Top" Width="91" Height="37" Click="LoadWaveformButton_Click"/>
         <Label Name="WaveformLoadMessage" Content="Loading&#xD;&#xA;Waveform,&#xD;&#xA;please &#xD;&#xA;wait." HorizontalAlignment="Left" Margin="114,82,0,0" VerticalAlignment="Top" Width="70" Height="84"/>
         <Label Name="WaveformUploadMessage" Content="Please wait, uploading waveform" HorizontalAlignment="Left" Margin="123,237,0,0" VerticalAlignment="Top" Width="190" RenderTransformOrigin="0.171,0.885" Height="26"/>
