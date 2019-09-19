@@ -521,65 +521,6 @@ namespace UnifiedTestSuiteApp
                 FGWaveformGraphDataLine.Points.Add(new DataPoint(i,wave.Voltages[i]));
               
             }
-            // dictionary access is essentially O(1) time so this is fine
-            //double incrementXValue;
-            //if (wave.Voltages.Length > 1000)  // only show the first 1000 points of the waveform if the waveform is longer than 1000 points
-            //                                  // this is for the sake of memory usage. A 8000000 pt waveform goes past 2 GB of memory usage.
-            //{
-            //    incrementXValue = waveformGraph.ActualWidth / 1000;
-            //}
-            //else
-            //{
-            //    incrementXValue = waveformGraph.ActualWidth / wave.Voltages.Length;
-            //}
-            //double YAxisScale = waveformGraph.ActualHeight / maximumAllowedAmplitude;
-            ////the scale of the y axis. Scaled between the max and min voltage supported by the current function generator.
-            ////the value of x to increment when drawing the points on the graph. Waveforms with more samples will have a smaller increment
-            ////size.
-
-            //// The vertical axis is easier, because we know that the maximum difference between highest and lowest voltages is 20V.
-            //// and since DC offset is removed, we know that the maximum voltage is 10V and the minimum would be -10V, so that's how we'll
-            //// set the scale
-            //double xPos = 0;  // x position of point to draw
-            //double yOffset = 0;
-            //double max = wave.Voltages.AsParallel().Max();  // it goes faster with this, causes a CPU spike though.
-            //double min = wave.Voltages.AsParallel().Min();  // need this instead of lowLevel/highLevel because of how those levels
-            //// get set when amplitude scaling occurs. We want the graph to draw the scaled waveform.
-            //// depending on how the DC offset is removed, the bottom points can end up less than -10 or greater than 10
-            //// this just shifts them up or down to match the actual amplitude shown on the function generator's screen.
-            //if (min < -10)
-            //{
-            //    yOffset = -10 - min;
-
-            //}
-            //if (max > 10)
-            //{
-            //    yOffset = 10 - max;
-            //}
-            //double constantYoffsetThing = ((waveformGraph.ActualHeight / 2) - YAxisScale * yOffset);
-            //// the problem is that we end up with 8 million of these Line objects, which take up a lot of memory
-
-            //for (int i = 0; i < wave.Voltages.Length - 1; i++)
-            //{
-            //    if (i > 1000)  // kinda a cheat, but it works, this stops the program from adding more lines past 1000.
-            //    {
-            //        break;
-
-            //    }
-            //    Line line = new Line
-            //    {
-            //        Stroke = Brushes.LimeGreen,
-            //        X1 = xPos,
-            //        X2 = xPos + incrementXValue,
-            //        // set Y coords
-            //        Y1 = (wave.Voltages[i] * -1 * YAxisScale) + constantYoffsetThing, // center the waveform halfway up the canvas
-            //        Y2 = (wave.Voltages[i + 1] * -1 * YAxisScale) + constantYoffsetThing,  // center the waveform halfway up the canvas
-            //        StrokeThickness = 2
-            //    };
-            //    waveformGraph.Children.Add(line);
-            //    xPos += incrementXValue;  // increment xPos by the set increment value
-
-            //}
             FGWaveformPlot.Model.InvalidatePlot(true);
             if (openingFile)  // if we're in file opening mode
             {

@@ -53,7 +53,6 @@
         <Button Name="TriggerSingleButton" Content="Single" HorizontalAlignment="Left" Margin="1067,479,0,0" VerticalAlignment="Top" Width="75" Click="TriggerSingleButton_Click" Height="20" RenderTransformOrigin="1,10.21"/>
         <Button Name="SaveWaveformCaptureButton" Content="Save Waveform&#xA;      Capture" HorizontalAlignment="Left" Margin="876,567,0,0" VerticalAlignment="Top" Width="104" Click="SaveWaveformCaptureButton_Click" Height="48"/>
         <Label Name="SavingWaveformCaptureLabel" Content="Saving Deep Memory&#xD;&#xA;         Please Wait" HorizontalAlignment="Left" Margin="986,683,0,0" VerticalAlignment="Top" Width="141" Foreground="Red" Height="42"/>
-        <!--<Canvas Name="waveformGraph" Background="White" Height="200" VerticalAlignment="Top" Margin="495,19,0,0" HorizontalAlignment="Left" Width="300"/>-->
         <oxy:PlotView Name="FGWaveformPlot" Margin="489,19,0,0" Background="WhiteSmoke" Height="204" Width="371" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <Button Name="CalibrationButton" Content="Calibrate" HorizontalAlignment="Left" Margin="155,23,0,0" VerticalAlignment="Top" Width="93" RenderTransformOrigin="0.54,0.07" Click="Button_Click_Calibrate" Height="40"/>
         <Button Name="openWaveformButton" Content="Open Waveform" HorizontalAlignment="Left" Margin="5,21,0,0" VerticalAlignment="Top" Width="97" Height="44" Click="Button_Click_OpenWaveform"/>
