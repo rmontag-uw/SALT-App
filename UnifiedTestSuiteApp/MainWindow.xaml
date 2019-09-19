@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Test Platform Application" Height="800" Width="1200" Loaded="Window_Loaded" Background="WhiteSmoke">
 
-    <Grid Background="WhiteSmoke" Height="750" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1182" Margin="17,11,-3.8,0">
+    <Grid Background="WhiteSmoke" Height="750" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1182" Margin="15,11,-1.8,0">
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -20,7 +20,7 @@
             </StackPanel>
         </ScrollViewer>
         <Label Name="PointsRead" Content="0" HorizontalAlignment="Left" Margin="727,355,0,0" VerticalAlignment="Top" Width="65" Height="26"/>
-        <oxy:PlotView Name="WaveformPlot" Margin="107,341,393,0" Background="WhiteSmoke" Height="384" VerticalAlignment="Top"/>
+        <oxy:PlotView Name="WaveformPlot" Margin="91,341,409,0" Background="WhiteSmoke" Height="384" VerticalAlignment="Top"/>
         <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="227,721,0,-0.4" Width="454">
             <StackPanel Name ="OscilloscopeChannelScaleStackPanel" Orientation="Horizontal" Height="20">
 
@@ -32,26 +32,26 @@
         <Button Name="RunButton" Content="Run" HorizontalAlignment="Left" Margin="965,421,0,0" VerticalAlignment="Top" Width="75" Click="RunButton_Click" Height="20"/>
         <Button Name="StopButton" Content="Stop" Margin="1089,421,-82,0" VerticalAlignment="Top" Click="StopButton_Click" HorizontalAlignment="Left" Width="75" Height="20"/>
         <Label Name="RunLabel" Content="Running" HorizontalAlignment="Left" Margin="1035,376,0,0" VerticalAlignment="Top" Height="26" Width="72"/>
-        <Label Content="Voltage Scale" HorizontalAlignment="Left" Margin="890,5,0,0" VerticalAlignment="Top" Width="89" Height="26"/>
-        <ComboBox Name="TimeScalePresetComboBox" Margin="979,61,0,0" IsEditable="False" IsReadOnly="True" SelectionChanged="TimeScalePresetComboBox_SelectionChanged" HorizontalAlignment="Left" Width="163" Height="29" VerticalAlignment="Top"/>
-        <ComboBox Name="MemoryDepthComboBox" Margin="1018,582,0,0" IsEditable="False" IsReadOnly="True" SelectionChanged="MemoryDepthComboBox_SelectionChanged" HorizontalAlignment="Left" Width="138" Height="33" VerticalAlignment="Top" RenderTransformOrigin="0.406,0.567"/>
-        <Label Content="Time Scale" HorizontalAlignment="Left" Margin="904,64,0,0" VerticalAlignment="Top" Height="26" Width="66"/>
-        <Slider Name="VoltageOffsetSlider" HorizontalAlignment="Left" Margin="986,198,-7,0" VerticalAlignment="Top" Height="21" Width="103" ValueChanged="VoltageOffsetSlider_ValueChanged"/>
+        <Label Content="Voltage Scale" HorizontalAlignment="Left" Margin="727,690,0,0" VerticalAlignment="Top" Width="89" Height="26"/>
+        <ComboBox Name="TimeScalePresetComboBox" Margin="986,217,0,0" IsEditable="False" IsReadOnly="True" SelectionChanged="TimeScalePresetComboBox_SelectionChanged" HorizontalAlignment="Left" Width="163" Height="29" VerticalAlignment="Top"/>
+        <ComboBox Name="MemoryDepthComboBox" Margin="1018,546,0,0" IsEditable="False" IsReadOnly="True" SelectionChanged="MemoryDepthComboBox_SelectionChanged" HorizontalAlignment="Left" Width="138" Height="33" VerticalAlignment="Top" RenderTransformOrigin="0.406,0.567"/>
+        <Label Content="Time Scale" HorizontalAlignment="Left" Margin="911,220,0,0" VerticalAlignment="Top" Height="26" Width="66"/>
+        <Slider Name="VoltageOffsetSlider" HorizontalAlignment="Left" Margin="890,624,0,0" VerticalAlignment="Top" Height="21" Width="103" ValueChanged="VoltageOffsetSlider_ValueChanged"/>
         <Slider Name="PositionOffsetSlider" HorizontalAlignment="Left" Margin="986,284,-7,0" VerticalAlignment="Top" Height="21" Width="103" ValueChanged="PositionOffsetSlider_ValueChanged"/>
-        <Label Content="Voltage Offset" HorizontalAlignment="Left" Margin="990,172,0,0" VerticalAlignment="Top" Height="26" Width="85"/>
+        <Label Content="Voltage Offset" HorizontalAlignment="Left" Margin="894,598,0,0" VerticalAlignment="Top" Height="26" Width="85"/>
         <Label Content="Position Offset" HorizontalAlignment="Left" Margin="984,253,0,0" VerticalAlignment="Top" Height="26" Width="87"/>
-        <Label Name="VoltageOffsetValue" Content="0.0" HorizontalAlignment="Left" Margin="1014,219,0,0" VerticalAlignment="Top" Height="26" Width="75"/>
+        <Label Name="VoltageOffsetValue" Content="0.0" HorizontalAlignment="Left" Margin="918,645,0,0" VerticalAlignment="Top" Height="26" Width="75"/>
         <Label Name="PositionOffsetValue" Content="0.0" HorizontalAlignment="Left" Margin="1015,303,0,0" VerticalAlignment="Top" Height="26" Width="60"/>
-        <Button Name="ZeroVoltageOffset" Content="Zero" HorizontalAlignment="Left" Margin="921,198,0,0" VerticalAlignment="Top" Width="59" Click="ZeroVoltageOffset_Click" Height="24"/>
+        <Button Name="ZeroVoltageOffset" Content="Zero" HorizontalAlignment="Left" Margin="825,624,0,0" VerticalAlignment="Top" Width="59" Click="ZeroVoltageOffset_Click" Height="24"/>
         <Button Name="ZeroPositionOffset" Content="Zero" HorizontalAlignment="Left" Margin="920,282,0,0" VerticalAlignment="Top" Width="59" Click="ZeroPositionOffset_Click" Height="24"/>
         <CheckBox Name="TriggerCheckBox" Content="Show Trigger" HorizontalAlignment="Left" Margin="936,479,0,0" VerticalAlignment="Top" Checked="TriggerCheckBox_Checked" Unchecked="TriggerCheckBox_Unchecked" Height="15" Width="89"/>
-        <Slider Name="TriggerSlider" HorizontalAlignment="Left" Margin="986,125,-7,0" VerticalAlignment="Top" Height="21" Width="103" ValueChanged="TriggerSlider_ValueChanged"/>
-        <Label Content="Trigger" Margin="1006,101,107,0" VerticalAlignment="Top" RenderTransformOrigin="6.237,0.585" Height="26"/>
-        <Label Name="TriggerVoltageValue" Content="0.0" HorizontalAlignment="Left" Margin="1014,140,0,0" VerticalAlignment="Top" Height="26" Width="61"/>
-        <Button Name="ZeroTriggerVoltage" Content="Zero" HorizontalAlignment="Left" Margin="920,126,0,0" VerticalAlignment="Top" Width="59" Click="ZeroTriggerVoltage_Click" Height="24"/>
-        <Label Content="Memory Depth" HorizontalAlignment="Left" Margin="1014,560,0,0" VerticalAlignment="Top" Width="93" Height="26"/>
+        <Slider Name="TriggerSlider" HorizontalAlignment="Left" Margin="823,481,0,0" VerticalAlignment="Top" Height="21" Width="103" ValueChanged="TriggerSlider_ValueChanged"/>
+        <Label Content="Trigger" Margin="843,457,270,0" VerticalAlignment="Top" RenderTransformOrigin="6.237,0.585" Height="26"/>
+        <Label Name="TriggerVoltageValue" Content="0.0" HorizontalAlignment="Left" Margin="851,496,0,0" VerticalAlignment="Top" Height="26" Width="61"/>
+        <Button Name="ZeroTriggerVoltage" Content="Zero" HorizontalAlignment="Left" Margin="757,482,0,0" VerticalAlignment="Top" Width="59" Click="ZeroTriggerVoltage_Click" Height="24"/>
+        <Label Content="Memory Depth" HorizontalAlignment="Left" Margin="1014,524,0,0" VerticalAlignment="Top" Width="93" Height="26"/>
         <Button Name="TriggerSingleButton" Content="Single" HorizontalAlignment="Left" Margin="1067,479,0,0" VerticalAlignment="Top" Width="75" Click="TriggerSingleButton_Click" Height="20" RenderTransformOrigin="1,10.21"/>
-        <Button Name="SaveWaveformCaptureButton" Content="Save Waveform&#xA;      Capture" HorizontalAlignment="Left" Margin="876,567,0,0" VerticalAlignment="Top" Width="104" Click="SaveWaveformCaptureButton_Click" Height="48"/>
+        <Button Name="SaveWaveformCaptureButton" Content="Save Waveform&#xA;      Capture" HorizontalAlignment="Left" Margin="876,525,0,0" VerticalAlignment="Top" Width="104" Click="SaveWaveformCaptureButton_Click" Height="48"/>
         <Label Name="SavingWaveformCaptureLabel" Content="Saving Deep Memory&#xD;&#xA;         Please Wait" HorizontalAlignment="Left" Margin="986,683,0,0" VerticalAlignment="Top" Width="141" Foreground="Red" Height="42"/>
         <oxy:PlotView Name="FGWaveformPlot" Margin="489,19,0,0" Background="WhiteSmoke" Height="204" Width="371" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <Button Name="CalibrationButton" Content="Calibrate" HorizontalAlignment="Left" Margin="155,23,0,0" VerticalAlignment="Top" Width="93" RenderTransformOrigin="0.54,0.07" Click="Button_Click_Calibrate" Height="40"/>
@@ -85,6 +85,7 @@
         <Label Name="OffsetErrorLabel" Content="ERROR: The DC offset cannot be removed from the waveform" HorizontalAlignment="Left" Margin="129,306,0,0" VerticalAlignment="Top" Width="343" Height="27"/>
         <Label Name="ScalingErrorLabel" Content="ERROR: Scaling factor too high for this function generator" HorizontalAlignment="Left" Margin="139,284,0,0" VerticalAlignment="Top" Width="333" Height="27"/>
         <Label Name="AmplitudeErrorLabel" Content="WARN: Amplitude higher than the set maximum, it has been scaled to fit." HorizontalAlignment="Left" Margin="128,268,0,0" VerticalAlignment="Top" Width="397" Height="27"/>
-        <ComboBox x:Name="VoltageScalePresetComboBox" Margin="979,3,0,0" IsEditable="False" IsReadOnly="True" SelectionChanged="VoltageScalePresetComboBox_SelectionChanged" Height="37" VerticalAlignment="Top" HorizontalAlignment="Left" Width="163"/>
+        <ComboBox x:Name="VoltageScalePresetComboBox" Margin="816,688,0,0" IsEditable="False" IsReadOnly="True" SelectionChanged="VoltageScalePresetComboBox_SelectionChanged" Height="37" VerticalAlignment="Top" HorizontalAlignment="Left" Width="163"/>
+        <Label Content="Logo?" HorizontalAlignment="Left" Margin="1001,64,0,0" VerticalAlignment="Top" Width="106" FontSize="36"/>
     </Grid>
 </Window>
