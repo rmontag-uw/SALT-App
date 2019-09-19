@@ -347,22 +347,16 @@ namespace UnifiedTestSuiteApp
             }
             // these get forced into being symmetrical. That is okay in my opinion. I don't think there are any function generators with
             // non-symmetrical voltage limits
-            minVoltageMark.Content = -1 * maximumAllowedAmplitude / 2 + "V";
-            maxVoltageMark.Content = "+" + maximumAllowedAmplitude / 2 + "V";  // set the graph's max and min labels to be what the used function
-                                                                               // generator's max and min supported voltages actually are.
-
-            // if the max or min voltage is a three digit or more number, the numbers overlap with the graph. This will likely never be a problem
-
+      
             Color backgroundColor = (Color)Background.GetValue(SolidColorBrush.ColorProperty);
             OxyColor hiddenColor = OxyColor.FromArgb(0, backgroundColor.R, backgroundColor.G, backgroundColor.B);
 
-            // This axis is the -0.5 to 0.5 axis for the FG waveform display
-
-
+            // This axis is the voltage axis for the FG waveform display
             LinearAxis FGWaveformVoltageAxis = new LinearAxis
             {
-                Minimum = -0.5,
-                Maximum = 0.5,
+                Minimum = -1 * maximumAllowedAmplitude / 2, 
+                // set the graph's max and min labels to be what the used function generator's max and min supported voltages actually are.
+                Maximum = maximumAllowedAmplitude / 2,
                 IsPanEnabled = false,
                 IsZoomEnabled = false,
                 Position = AxisPosition.Left,

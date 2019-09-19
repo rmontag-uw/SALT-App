@@ -67,9 +67,6 @@
         <Label Name="WaveformName" Content="No Waveform Loaded" HorizontalAlignment="Left" Margin="611,220,0,0" VerticalAlignment="Top" Height="26" Width="144"/>
         <Label Name="WaveformMemoryLocation" Content="No Waveform Loaded" HorizontalAlignment="Left" Margin="611,251,0,0" VerticalAlignment="Top" Height="26" Width="144"/>
         <TextBox Name="WaveformSampleRate" Text="No Waveform Loaded" HorizontalAlignment="Left" Margin="614,288,0,0" VerticalAlignment="Top" TextChanged="WaveformSampleRate_TextChanged" PreviewTextInput="PreviewSampleRateInput" Height="18" Width="121"/>
-        <Label Name="maxVoltageMark" Content="+0.5V" HorizontalAlignment="Left" Margin="442,14,0,0" VerticalAlignment="Top" Height="26" Width="39"/>
-        <Label Name="minVoltageMark" Content="-0.5V" HorizontalAlignment="Left" Margin="446,205,0,0" VerticalAlignment="Top" Height="26" Width="35"/>
-        <Label x:Name="ZeroVMark" Content="0V" HorizontalAlignment="Left" Margin="456,108,0,0" VerticalAlignment="Top" Height="26" Width="24"/>
         <Button Name="cancelFileOpen" Content="Cancel" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" Width="87" Click="Button_Click_CancelFileOpen" Height="20"/>
         <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="104" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="334,237,0,0" Width="105">
             <StackPanel x:Name="FunctionGenChannelButtonStackPanel" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105">
