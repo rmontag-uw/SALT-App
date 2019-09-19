@@ -189,7 +189,7 @@ namespace UnifiedTestSuiteApp
             voltageAxes = new LinearAxis[numOscilloscopeChannels];  // get an axis for each input channel of the scope
             FGWaveformPlot.Model = new PlotModel();
             FGWaveformGraphDataLine = new LineSeries() { Color = OxyColor.FromRgb(34, 139, 34) };
-            FGWaveformGraphZeroLine = new LineSeries() { Color = OxyColor.FromRgb(254,247,64)};  // zero line is sunflower yellow
+            FGWaveformGraphZeroLine = new LineSeries() { Color = OxyColor.FromRgb(0,0,0)};  // zero line is black
             FGWaveformPlot.Model.Series.Add(FGWaveformGraphZeroLine);
             FGWaveformPlot.Model.Series.Add(FGWaveformGraphDataLine);
             channelColors = new System.Drawing.Color[numOscilloscopeChannels];
@@ -365,7 +365,8 @@ namespace UnifiedTestSuiteApp
                 Maximum = 0.5,
                 IsPanEnabled = false,
                 IsZoomEnabled = false,
-               // Position = AxisPosition.Left
+                Position = AxisPosition.Left,
+                Title = "Voltage"
             };
 
             // This axis is just here to make sure that the bottom axis has no ticks or number labels 
@@ -374,7 +375,7 @@ namespace UnifiedTestSuiteApp
 
                 IsPanEnabled = false,
                 IsZoomEnabled = false,
-                IsAxisVisible = true,
+                IsAxisVisible = false,
                 TickStyle = TickStyle.None,
                 TextColor = hiddenColor,  // makes it look rectangular at startup while still having no visible numbers on the bottom. 
                 Position = AxisPosition.Bottom
@@ -471,7 +472,6 @@ namespace UnifiedTestSuiteApp
             double triggerLineScaled = (scope.GetTriggerLevel() * currentYScale) - (currentYScale / 2);
             WaveformPlot.Model.Series.Add(triggerLine);
             WaveformPlot.Model.InvalidatePlot(true);
-
         }
 
         private void ExitAll()
@@ -482,6 +482,7 @@ namespace UnifiedTestSuiteApp
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //InitializeFG();  // after the window is loaded, attempt to initialize the function generator
+            DrawFGWaveformGraph(null);  // just to draw the zero line on the function gen graph before startup
             SetRefreshTimer();
         }
 
@@ -505,8 +506,8 @@ namespace UnifiedTestSuiteApp
                                                         // line for 0V and then return
             {
                 FGWaveformGraphZeroLine.Points.Clear();
-                FGWaveformGraphZeroLine.Points.Add(new DataPoint(0, FGWaveformPlot.ActualHeight / 2));
-                FGWaveformGraphZeroLine.Points.Add(new DataPoint(FGWaveformPlot.ActualWidth, FGWaveformPlot.ActualHeight / 2));
+                FGWaveformGraphZeroLine.Points.Add(new DataPoint(0, 0));
+                FGWaveformGraphZeroLine.Points.Add(new DataPoint(FGWaveformPlot.ActualWidth, 0));
                 FGWaveformPlot.Model.InvalidatePlot(true);
                 return;
             }
@@ -518,8 +519,8 @@ namespace UnifiedTestSuiteApp
                 length = wave.Voltages.Length;
             }
             FGWaveformGraphZeroLine.Points.Clear();
-            FGWaveformGraphZeroLine.Points.Add(new DataPoint(0, FGWaveformPlot.ActualHeight / 2));
-            FGWaveformGraphZeroLine.Points.Add(new DataPoint(length, FGWaveformPlot.ActualHeight / 2));
+            FGWaveformGraphZeroLine.Points.Add(new DataPoint(0, 0));
+            FGWaveformGraphZeroLine.Points.Add(new DataPoint(length, 0));
             for (int i = 0; i < length; i++)
             {
 
