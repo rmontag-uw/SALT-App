@@ -1462,13 +1462,13 @@ namespace UnifiedTestSuiteApp
             {
                 lock (downloadLock)
                 {
-                    double currentScale = scope.GetYScale();
-                    double YOrigin = scope.GetYOrigin();
-                    double Yinc = scope.GetYIncrement();
-                    double Yref = scope.GetYReference();
+                    //double currentScale = scope.GetYScale();
+                    //double YOrigin = scope.GetYOrigin();
+                    //double Yinc = scope.GetYIncrement();
+                    //double Yref = scope.GetYReference();
                     double xInc = scope.GetXIncrement();
                     double[] voltages = scope.GetDeepMemVoltages(scopeChannelInFocus);
-                    //if (data.Length > memDepth)  // idk why this happens
+                    //if (data.Length > memDepth)  // idk why this happens (it doesn't anymore)
                     //{
                     //    IEnumerable<byte> temp = data.Skip(data.Length - memDepth);  // we skip corrupted values at the beginning of the capture if there are any
                     //    data = temp.ToArray();  // this problem has likely been resolved.
