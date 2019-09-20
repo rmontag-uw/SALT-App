@@ -1462,17 +1462,8 @@ namespace UnifiedTestSuiteApp
             {
                 lock (downloadLock)
                 {
-                    //double currentScale = scope.GetYScale();
-                    //double YOrigin = scope.GetYOrigin();
-                    //double Yinc = scope.GetYIncrement();
-                    //double Yref = scope.GetYReference();
                     double xInc = scope.GetXIncrement();
                     double[] voltages = scope.GetDeepMemVoltages(scopeChannelInFocus);
-                    //if (data.Length > memDepth)  // idk why this happens (it doesn't anymore)
-                    //{
-                    //    IEnumerable<byte> temp = data.Skip(data.Length - memDepth);  // we skip corrupted values at the beginning of the capture if there are any
-                    //    data = temp.ToArray();  // this problem has likely been resolved.
-                    //}
                     string directoryPath = Directory.GetCurrentDirectory() + "\\captures";
                     Directory.CreateDirectory(directoryPath);  // if the captures directory doesn't exist
                                                                // create it as a subdirectory of whatever current directory the program is located in
