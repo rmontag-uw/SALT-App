@@ -38,10 +38,10 @@
         <Label Content="Time Scale" HorizontalAlignment="Left" Margin="911,258,0,0" VerticalAlignment="Top" Height="26" Width="66"/>
         <Slider Name="VoltageOffsetSlider" HorizontalAlignment="Left" Margin="890,624,0,0" VerticalAlignment="Top" Height="21" Width="103" ValueChanged="VoltageOffsetSlider_ValueChanged"/>
         <Slider Name="PositionOffsetSlider" HorizontalAlignment="Left" Margin="986,322,0,0" VerticalAlignment="Top" Height="21" Width="103" ValueChanged="PositionOffsetSlider_ValueChanged"/>
-        <Label Content="Voltage Offset" HorizontalAlignment="Left" Margin="894,598,0,0" VerticalAlignment="Top" Height="26" Width="85"/>
-        <Label Content="Position Offset" HorizontalAlignment="Left" Margin="984,291,0,0" VerticalAlignment="Top" Height="26" Width="87"/>
+        <Label Content="Voltage/Vertical Position Offset" HorizontalAlignment="Left" Margin="823,598,0,0" VerticalAlignment="Top" Height="26" Width="174"/>
+        <Label Content="Time/Horizontal Position Offset" HorizontalAlignment="Left" Margin="952,291,0,0" VerticalAlignment="Top" Height="26" Width="175"/>
         <Label Name="VoltageOffsetValue" Content="0.0" HorizontalAlignment="Left" Margin="918,645,0,0" VerticalAlignment="Top" Height="26" Width="75"/>
-        <Label Name="PositionOffsetValue" Content="0.0" HorizontalAlignment="Left" Margin="1015,341,0,0" VerticalAlignment="Top" Height="26" Width="60"/>
+        <Label Name="PositionOffsetValue" Content="0.0" HorizontalAlignment="Left" Margin="1017,341,0,0" VerticalAlignment="Top" Height="26" Width="60"/>
         <Button Name="ZeroVoltageOffset" Content="Zero" HorizontalAlignment="Left" Margin="825,624,0,0" VerticalAlignment="Top" Width="59" Click="ZeroVoltageOffset_Click" Height="24"/>
         <Button Name="ZeroPositionOffset" Content="Zero" HorizontalAlignment="Left" Margin="920,320,0,0" VerticalAlignment="Top" Width="59" Click="ZeroPositionOffset_Click" Height="24"/>
         <CheckBox Name="TriggerCheckBox" Content="Show Trigger" HorizontalAlignment="Left" Margin="936,479,0,0" VerticalAlignment="Top" Checked="TriggerCheckBox_Checked" Unchecked="TriggerCheckBox_Unchecked" Height="15" Width="89"/>
