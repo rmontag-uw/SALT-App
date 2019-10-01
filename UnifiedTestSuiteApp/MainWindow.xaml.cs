@@ -18,6 +18,7 @@ using System.Timers;
 using FunctionGeneratorAPI;
 using Microsoft.Win32;
 using System.Text.RegularExpressions;
+using System.Windows.Media.Imaging;
 
 namespace UnifiedTestSuiteApp
 {
@@ -150,7 +151,7 @@ namespace UnifiedTestSuiteApp
             fg.SetAllOutputsOff();  // turn off all the outputs of the function generator
             scopeChannelInFocus = 1;  // start with channel 1 in focus for the scope
             InitializeComponent();
-
+            LogoImage.Source = new BitmapImage(new Uri("logo.png", UriKind.Relative));
             WaveformLoadMessage.Visibility = Visibility.Hidden;  // hide the "waveform loading please wait" message
             WaveformUploadMessage.Visibility = Visibility.Hidden;  // hide the "uploading waveform please wait" message
           //  waveformGraph.Background = Brushes.Black;  // set the canvas background to black
@@ -186,7 +187,7 @@ namespace UnifiedTestSuiteApp
             channelsToDraw = new HashSet<int>();  // if a channel number is contained within this list, draw it
             channelsToDraw.Add(1);  // we enable graphing channel 1 by default
             channelGraphs = new LineSeries[numOscilloscopeChannels];  // init the channelGraphs arrray
-            voltageAxes = new LinearAxis[numOscilloscopeChannels];  // get an axis for each input channel of the scope
+            voltageAxes = new LinearAxis[numOscilloscopeChannels];  // get an axis for each input channel of the scope 
             FGWaveformPlot.Model = new PlotModel();
             FGWaveformGraphDataLine = new LineSeries() { Color = OxyColor.FromRgb(34, 139, 34) };
             FGWaveformGraphZeroLine = new LineSeries() { Color = OxyColor.FromRgb(0,0,0)};  // zero line is black
