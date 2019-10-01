@@ -86,8 +86,8 @@
         <Label Name="ScalingErrorLabel" Content="ERROR: Scaling factor too high for this function generator" HorizontalAlignment="Left" Margin="139,284,0,0" VerticalAlignment="Top" Width="333" Height="27"/>
         <Label Name="AmplitudeErrorLabel" Content="WARN: Amplitude higher than the set maximum, it has been scaled to fit." HorizontalAlignment="Left" Margin="128,268,0,0" VerticalAlignment="Top" Width="397" Height="27"/>
         <ComboBox x:Name="VoltageScalePresetComboBox" Margin="816,688,0,0" IsEditable="False" IsReadOnly="True" SelectionChanged="VoltageScalePresetComboBox_SelectionChanged" Height="37" VerticalAlignment="Top" HorizontalAlignment="Left" Width="163"/>
-        <Label HorizontalAlignment="Left" Margin="963,38,0,0" VerticalAlignment="Top" Width="164" FontSize="36" Height="170">
-            <Image Name="LogoImage"  Height="164" Width="164"/>
+        <Label HorizontalAlignment="Left" Margin="876,10,0,0" VerticalAlignment="Top" Width="286" FontSize="36" Height="208">
+            <Image Name="LogoImage"  Height="208" Width="274" Source="/logo.png"/>
         </Label>
         <Label Content="Enabled&#xD;&#xA;Channels" HorizontalAlignment="Left" Margin="25,506,0,0" VerticalAlignment="Top" Width="66"/>
         <Label Content="Active Channel" HorizontalAlignment="Left" Margin="60,697,0,0" VerticalAlignment="Top"/>
