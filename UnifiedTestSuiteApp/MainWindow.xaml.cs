@@ -18,6 +18,7 @@ using System.Timers;
 using FunctionGeneratorAPI;
 using Microsoft.Win32;
 using System.Text.RegularExpressions;
+using System.Windows.Media.Imaging;
 
 namespace UnifiedTestSuiteApp
 {
@@ -150,7 +151,7 @@ namespace UnifiedTestSuiteApp
             fg.SetAllOutputsOff();  // turn off all the outputs of the function generator
             scopeChannelInFocus = 1;  // start with channel 1 in focus for the scope
             InitializeComponent();
-
+            LogoImage.Source = new BitmapImage(new Uri("logo.png", UriKind.Relative));
             WaveformLoadMessage.Visibility = Visibility.Hidden;  // hide the "waveform loading please wait" message
             WaveformUploadMessage.Visibility = Visibility.Hidden;  // hide the "uploading waveform please wait" message
           //  waveformGraph.Background = Brushes.Black;  // set the canvas background to black
