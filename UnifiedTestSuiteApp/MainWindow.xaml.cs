@@ -187,7 +187,7 @@ namespace UnifiedTestSuiteApp
             channelsToDraw = new HashSet<int>();  // if a channel number is contained within this list, draw it
             channelsToDraw.Add(1);  // we enable graphing channel 1 by default
             channelGraphs = new LineSeries[numOscilloscopeChannels];  // init the channelGraphs arrray
-            voltageAxes = new LinearAxis[numOscilloscopeChannels];  // get an axis for each input channel of the scope
+            voltageAxes = new LinearAxis[numOscilloscopeChannels];  // get an axis for each input channel of the scope 
             FGWaveformPlot.Model = new PlotModel();
             FGWaveformGraphDataLine = new LineSeries() { Color = OxyColor.FromRgb(34, 139, 34) };
             FGWaveformGraphZeroLine = new LineSeries() { Color = OxyColor.FromRgb(0,0,0)};  // zero line is black
