@@ -6,17 +6,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using OscilloscopeAPI;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.IO;
 using System.Threading;
 using System.Timers;
-using FunctionGeneratorAPI;
 using Microsoft.Win32;
 using System.Text.RegularExpressions;
 using System.Windows.Media.Imaging;
+using TestingPlatformLibrary.FunctionGeneratorAPI;
+using TestingPlatformLibrary.OscilloscopeAPI;
 
 namespace UnifiedTestSuiteApp
 {
