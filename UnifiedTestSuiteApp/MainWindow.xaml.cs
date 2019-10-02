@@ -172,9 +172,9 @@ namespace UnifiedTestSuiteApp
             PlayWaveform.IsEnabled = false;  // disable the button for playing a waveform
             SaveWaveformParameters.IsEnabled = false; // disable the save waveform parameters button
             WaveformSaveInstructionLabel.Visibility = Visibility.Hidden;  // hide the instruction label for saving waveform
-            voltageOffsetScaleConstant = scope.GetVoltageOffsetScaleConstant();
+            voltageOffsetScaleConstant = scope.GetYAxisOffsetScaleConstant();
             triggerPositionScaleConstant = scope.GetTriggerPositionScaleConstant();  // get the graph constants from the scope
-            timeOffsetScaleConstant = scope.GetTimeOffsetScaleConstant();
+            timeOffsetScaleConstant = scope.GetXAxisOffsetScaleConstant();
             SavingWaveformCaptureLabel.Visibility = Visibility.Hidden; // hide the "saving waveform please wait" label
             showTriggerLine = false;  // start by not showing the dashed line for the trigger
             double tempYScale = scope.GetYScale();
@@ -233,7 +233,7 @@ namespace UnifiedTestSuiteApp
                 {
                     int checkedChannel = (int)(sender as RadioButton).Tag;
                     scopeChannelInFocus = checkedChannel;
-                    double offset = scope.GetVerticalOffset(scopeChannelInFocus);  // and set the displayed offset to the offset of that channel
+                    double offset = scope.GetYAxisOffset(scopeChannelInFocus);  // and set the displayed offset to the offset of that channel
                     VoltageOffsetSlider.Value = offset;
                     previousYScaleFactor = scope.GetYScale(scopeChannelInFocus);
                     int channelChangedVoltageScaleCheck = Array.IndexOf(mappedVoltageScales, previousYScaleFactor);
@@ -303,7 +303,7 @@ namespace UnifiedTestSuiteApp
                 // the scope is presently showing for channel 1.
                 VoltageScalePresetComboBox.SelectedIndex = currentVoltageScaleCheck;
             }
-            int currentTimeScaleCheck = Array.IndexOf(mappedTimeScales, scope.GetTimeScale(1));
+            int currentTimeScaleCheck = Array.IndexOf(mappedTimeScales, scope.GetXAxisScale());
             if (currentTimeScaleCheck >= 0)
             {  // use the mapping between names and actual scales to set the initial selected scale to the one
                 // the scope is presently showing for channel 1.
@@ -1260,7 +1260,7 @@ namespace UnifiedTestSuiteApp
                     waveData = scope.GetWaveVoltages(channelParam);  // grab the point data from the scope for the given channel
                     currentScale = scope.GetYScale();  // get the voltage scale
                     triggerLevel = scope.GetTriggerLevel();
-                    voltageOffset = scope.GetVerticalOffset(channelParam);
+                    voltageOffset = scope.GetYAxisOffset(channelParam);
                 }
                 if (Application.Current == null)  // avoid weird errors on application close
                 {
@@ -1371,7 +1371,7 @@ namespace UnifiedTestSuiteApp
         private void TimeScalePresetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int index = TimeScalePresetComboBox.SelectedIndex;
-            scope.SetTimeScale(scopeChannelInFocus, mappedTimeScales[index]);
+            scope.SetXAxisScale(mappedTimeScales[index]);
             PositionOffsetSlider.Maximum = timeOffsetScaleConstant * mappedTimeScales[index];
             PositionOffsetSlider.Minimum = -1 * PositionOffsetSlider.Maximum;
         }
@@ -1379,27 +1379,27 @@ namespace UnifiedTestSuiteApp
         private void VoltageOffsetSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             VoltageOffsetValue.Content = VoltageOffsetSlider.Value;
-            scope.SetVerticalOffset(scopeChannelInFocus, VoltageOffsetSlider.Value);
+            scope.SetYAxisOffset(scopeChannelInFocus, VoltageOffsetSlider.Value);
         }
 
         private void PositionOffsetSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             PositionOffsetValue.Content = PositionOffsetSlider.Value;
-            scope.SetPositionOffset(scopeChannelInFocus, PositionOffsetSlider.Value);
+            scope.SetXAxisOffset(PositionOffsetSlider.Value);
         }
 
         private void ZeroVoltageOffset_Click(object sender, RoutedEventArgs e)
         {
             VoltageOffsetValue.Content = 0;
             VoltageOffsetSlider.Value = 0;
-            scope.SetVerticalOffset(scopeChannelInFocus, VoltageOffsetSlider.Value);
+            scope.SetYAxisOffset(scopeChannelInFocus, VoltageOffsetSlider.Value);
         }
 
         private void ZeroPositionOffset_Click(object sender, RoutedEventArgs e)
         {
             PositionOffsetValue.Content = 0;
             PositionOffsetSlider.Value = 0;
-            scope.SetPositionOffset(scopeChannelInFocus, PositionOffsetSlider.Value);
+            scope.SetXAxisOffset(PositionOffsetSlider.Value);
         }
 
         private void TriggerCheckBox_Checked(object sender, RoutedEventArgs e)
