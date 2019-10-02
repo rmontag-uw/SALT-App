@@ -6,8 +6,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
-using NationalInstruments.Visa;
 using OscilloscopeAPI;
 using OxyPlot;
 using OxyPlot.Axes;
@@ -85,7 +83,6 @@ namespace UnifiedTestSuiteApp
             currentWaveform = new WaveformFile();
             channelsPlaying = new HashSet<int>();
             cancelToken = new CancellationTokenSource();
-            ResourceManager rm = new ResourceManager();
             var autoEvent = new AutoResetEvent(false);
             var oscilloscopes = VISAOscilloscope.GetConnectedOscilloscopes();
             var functionGenerators = VISAFunctionGenerator.GetConnectedFunctionGenerators();
