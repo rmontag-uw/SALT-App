@@ -83,9 +83,9 @@ namespace UnifiedTestSuiteApp
             currentWaveform = new WaveformFile();
             channelsPlaying = new HashSet<int>();
             cancelToken = new CancellationTokenSource();
-            var autoEvent = new AutoResetEvent(false);
-            var oscilloscopes = VISAOscilloscope.GetConnectedOscilloscopes();
-            var functionGenerators = VISAFunctionGenerator.GetConnectedFunctionGenerators();
+            AutoResetEvent autoEvent = new AutoResetEvent(false);
+            VISAOscilloscope.ConnectedOscilloscopeStruct oscilloscopes = VISAOscilloscope.GetConnectedOscilloscopes();
+            VISAFunctionGenerator.ConnectedFunctionGeneratorStruct functionGenerators = VISAFunctionGenerator.GetConnectedFunctionGenerators();
             if(oscilloscopes.connectedOscilloscopes.Length == 0)
             {
                 // show a messagebox error if there are no scopes connected
@@ -603,7 +603,7 @@ namespace UnifiedTestSuiteApp
 
         private void ParseFileHandler(string filePath)
         {
-            var t = new Thread(() => ParseFile(filePath));  // spin off a new thread for file parsing
+            Thread t = new Thread(() => ParseFile(filePath));  // spin off a new thread for file parsing
             t.Start();
         }
 
@@ -612,7 +612,7 @@ namespace UnifiedTestSuiteApp
 
             double sampleRate = 844;  // default samplerate
             string fileName = System.IO.Path.GetFileName(filePath);
-            var fileLines = File.ReadLines(filePath);
+            IEnumerable<string> fileLines = File.ReadLines(filePath);
             if (fileLines.First().StartsWith("samplerate="))
             {
                 sampleRate = double.Parse(fileLines.First().Substring(11));  // parse the sampleRate
