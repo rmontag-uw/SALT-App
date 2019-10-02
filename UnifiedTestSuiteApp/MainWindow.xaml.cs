@@ -1180,7 +1180,7 @@ namespace UnifiedTestSuiteApp
                 OriginalVoltages = voltages;
                 Voltages = OriginalVoltages;  // set the reference of voltages to the original voltages passed in (this is for scaling stuff)
                                               // original voltages is also not mutable. we can't set it.
-                ScaledVoltages = null;  // this starts off null so we don't need to allocate another (up to 8million) double array in memory
+                ScaledVoltages = null;  // this starts off null so we don't need to allocate another (up to 8 million) double array in memory
                                         // unless we need to.
                                         // Example of the Lazy Initialization design pattern. Shoutout to UW CSE 331 and Dr. Hal Perkins.
                 FilePath = filePath;
