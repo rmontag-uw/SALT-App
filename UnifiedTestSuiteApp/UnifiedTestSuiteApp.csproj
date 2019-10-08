@@ -94,6 +94,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainWindow_FunctionGeneratorUiHandlers.cs" />
+    <Compile Include="MainWindow_GlobalObjects.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
