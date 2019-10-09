@@ -34,8 +34,6 @@ namespace UnifiedTestSuiteApp
 
             openingFile = false; // set the uploading flag
 
-
-            // MAKE SOMETHING THAT LETS THE USER TRY TO CONNECT AGAIN IF THE RESOURCE ISN'T FOUND INSTEAD OF CRASHING.
             functionGeneratorChannelInFocus = 1;  // start with channel 1 in focus
             fileDataMap = new Dictionary<string, WaveformFile>();
             currentWaveform = new WaveformFile();
@@ -845,6 +843,7 @@ namespace UnifiedTestSuiteApp
         {
             openingFile = false;  // set file opening flag to false
             cancelFileOpen.Visibility = Visibility.Hidden;  // and then hide the button
+            WaveformList.IsEnabled = true;  // fix that one bug we found during the usability study 
             WaveformSaveInstructionLabel.Visibility = Visibility.Hidden;  // hide the instruction label
             DrawFGWaveformGraph(null);  // draw with a null WaveformFile to clear the graph after the user clicked cancel
         }
