@@ -14,7 +14,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="132" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="705,423,0,0" Width="97">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="132" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="671,423,0,0" Width="97">
             <StackPanel x:Name="OscilloscopeChannelButtonStackPanel" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105">
 
             </StackPanel>
@@ -26,8 +26,8 @@
 
             </StackPanel>
         </ScrollViewer>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="13" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="126,711,0,0" Width="388">
-            <StackPanel Name ="OscilloscopeRadioButtonStackPanel" Orientation="Horizontal" Height="27"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="130" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="779,423,0,0" Width="86">
+            <StackPanel Name ="OscilloscopeRadioButtonStackPanel" Orientation="Vertical" Height="126" Width="77"/>
         </ScrollViewer>
         <Button Name="RunButton" Content="Run" HorizontalAlignment="Left" Margin="694,573,0,0" VerticalAlignment="Top" Width="75" Click="OScope_RunButton_Click" Height="20"/>
         <Button Name="StopButton" Content="Stop" Margin="695,614,0,0" VerticalAlignment="Top" Click="OScope_StopButton_Click" HorizontalAlignment="Left" Width="75" Height="20"/>
@@ -89,7 +89,7 @@
         <Label HorizontalAlignment="Left" Margin="876,10,0,0" VerticalAlignment="Top" Width="286" FontSize="36" Height="208">
             <Image Name="LogoImage"  Height="208" Width="274" Source="/logo.png"/>
         </Label>
-        <Label Content="Enabled&#xD;&#xA;Channels" HorizontalAlignment="Left" Margin="722,376,0,0" VerticalAlignment="Top" Width="66"/>
-        <Label Content="Active Channel" HorizontalAlignment="Left" Margin="22,705,0,0" VerticalAlignment="Top"/>
+        <Label Content="Enabled&#xD;&#xA;Channels" HorizontalAlignment="Left" Margin="688,376,0,0" VerticalAlignment="Top" Width="66"/>
+        <Label Content="Active Channel" HorizontalAlignment="Left" Margin="776,392,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
