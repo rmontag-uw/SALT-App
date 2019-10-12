@@ -48,15 +48,12 @@ namespace UnifiedTestSuiteApp
         private string memoryLocationSelected;
         private readonly HashSet<int> channelsPlaying;
         private readonly double maximumAllowedAmplitude = 1;  // set to -1 to allow amplitudes up to the function generator's maximum
-                                                              // Because the IntitializeFG method is different than the constructor, we can't even make this readonly.
-                                                              // this value should NOT ever be changed at runtime, that would be insane. if it's -1 set it to what it needs to be in the
-                                                              // InitializeFG method and leave it at that.
         private bool uploading;
         private bool loading;
         // each memory location is mapped to a WaveformFile that represents the waveform saved there.
         private readonly Dictionary<string, WaveformFile> fileDataMap;  // a map from the function generator's valid memory locations to
-        private WaveformFile currentWaveform;
         // WaveformFiles that contain data about the waveform stored there
+        private WaveformFile currentWaveform;
 
     }
 }
