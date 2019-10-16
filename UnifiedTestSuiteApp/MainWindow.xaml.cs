@@ -169,7 +169,7 @@ namespace UnifiedTestSuiteApp
                 scope.DisableChannel(i);  // just make sure everything is set to off before we start
                 Label channelLabel = new Label() { Content = i + "=" + scope.GetYScale(i) + "V", Visibility = Visibility.Hidden };
                 // get the scale labels for each channel, and then hide them
-                CheckBox cb = new CheckBox() { Content = "Channel " + i, IsChecked = false };
+                CheckBox cb = new CheckBox() { Content = "Channel " + i, IsChecked = false};
                 RadioButton rb = new RadioButton()
                 {
                     Content = "Channel " + i + "   ",
