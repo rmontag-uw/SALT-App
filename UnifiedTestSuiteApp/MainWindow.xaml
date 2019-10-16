@@ -21,8 +21,8 @@
         </ScrollViewer>
         <Label Name="PointsRead" Content="0" HorizontalAlignment="Left" Margin="1330,384,-213,0" VerticalAlignment="Top" Width="65" Height="26"/>
         <oxy:PlotView Name="WaveformPlot" Margin="7,357,493,0" Background="WhiteSmoke" Height="384" VerticalAlignment="Top"/>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="187,729,0,-8.4" Width="454">
-            <StackPanel Name ="OscilloscopeChannelScaleStackPanel" Orientation="Horizontal" Height="20">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="95,705,0,0" Width="454">
+            <StackPanel Name ="OscilloscopeChannelScaleStackPanel" Orientation="Horizontal" Height="28">
 
             </StackPanel>
         </ScrollViewer>
