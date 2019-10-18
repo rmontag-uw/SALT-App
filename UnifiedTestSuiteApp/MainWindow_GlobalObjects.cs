@@ -15,7 +15,7 @@ namespace UnifiedTestSuiteApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string appName = "Test Suite";
+        private const string appName = "S.A.L.T Application";
         private const int refreshInterval = 150;            // the graph refresh interval in ms
         private static System.Timers.Timer refreshTimer;    // gotta make sure there's no ambiguity with the threading timer
         private readonly IOscilloscope scope;               // 
