@@ -53,7 +53,8 @@ namespace UnifiedTestSuiteApp
         {
             foreach (int channel in channelsToDraw)
             {
-
+                // TODO: Some sort of priority buffer, so we can have channel 2 stay on top of channel 1 when drawn at all times, just like on the
+                // actual scope, instead of them flickering over top of eachother back and forth. 
                 // spin graph drawing off into seperate thread
                 ThreadPool.QueueUserWorkItem(state => OScope_DrawGraph(channel, channelColors[channel - 1]));
             }
