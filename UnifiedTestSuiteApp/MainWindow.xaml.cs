@@ -10,6 +10,7 @@ using System.Threading;
 using System.Windows.Media.Imaging;
 using TestingPlatformLibrary.FunctionGeneratorAPI;
 using TestingPlatformLibrary.OscilloscopeAPI;
+using TestingPlatformLibrary;
 
 namespace UnifiedTestSuiteApp
 {
@@ -33,9 +34,10 @@ namespace UnifiedTestSuiteApp
             channelsPlaying = new HashSet<int>();
             cancelToken = new CancellationTokenSource();
             AutoResetEvent autoEvent = new AutoResetEvent(false);
-            VISAOscilloscope.ConnectedOscilloscopeStruct oscilloscopes = VISAOscilloscope.GetConnectedOscilloscopes();
-            VISAFunctionGenerator.ConnectedFunctionGeneratorStruct functionGenerators = VISAFunctionGenerator.GetConnectedFunctionGenerators();
-            if (oscilloscopes.connectedOscilloscopes.Length == 0)
+            // this is one of those situations where C#'s ability to use "var" is nice, but statically typed until the end!
+            VISADevice.ConnectedDeviceStruct<VISAOscilloscope> oscilloscopes = VISAOscilloscope.GetConnectedOscilloscopes();
+            VISADevice.ConnectedDeviceStruct<VISAFunctionGenerator> functionGenerators = VISAFunctionGenerator.GetConnectedFunctionGenerators();
+            if (oscilloscopes.connectedDevices.Length == 0)
             {
                 // show a messagebox error if there are no scopes connected
                 MessageBoxResult result = MessageBox.Show("Error: No oscilloscopes found. " +
@@ -48,7 +50,7 @@ namespace UnifiedTestSuiteApp
                         return;
                 }
             }
-            if (functionGenerators.connectedFunctionGenerators.Length == 0)
+            if (functionGenerators.connectedDevices.Length == 0)
             {
                 // show a messagebox error if there are no function generators connected
                 MessageBoxResult result = MessageBox.Show("Error: No function generators found. " +
@@ -61,7 +63,7 @@ namespace UnifiedTestSuiteApp
                         return;
                 }
             }
-            if (oscilloscopes.connectedOscilloscopes.Length > 1)
+            if (oscilloscopes.connectedDevices.Length > 1)
             {
                 MessageBoxResult result = MessageBox.Show("Error: Too many oscilloscopes found. " +
                    "Unplug all but one oscilloscope and then try again",
@@ -75,9 +77,9 @@ namespace UnifiedTestSuiteApp
             }
             else
             {
-                scope = oscilloscopes.connectedOscilloscopes[0];  // there's only one, that's the one we use
+                scope = oscilloscopes.connectedDevices[0];  // there's only one, that's the one we use
             }
-            if (functionGenerators.connectedFunctionGenerators.Length > 1)
+            if (functionGenerators.connectedDevices.Length > 1)
             {
                 MessageBoxResult result = MessageBox.Show("Error: Too many function generators found. " +
                    "Unplug all but one function generator and then try again",
@@ -91,7 +93,7 @@ namespace UnifiedTestSuiteApp
             }
             else
             {
-                fg = functionGenerators.connectedFunctionGenerators[0];  // there's only one, that's the one we use
+                fg = functionGenerators.connectedDevices[0];  // there's only one, that's the one we use
             }
 
             scope.Run();  // start the scope
