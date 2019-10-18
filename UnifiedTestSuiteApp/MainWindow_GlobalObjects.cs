@@ -39,8 +39,8 @@ namespace UnifiedTestSuiteApp
         private readonly double timeOffsetScaleConstant;
         private readonly System.Drawing.Color[] channelColors;
         private readonly IFunctionGenerator fg;
-        private LineSeries FGWaveformGraphZeroLine;
-        private LineSeries FGWaveformGraphDataLine;
+        private readonly LineSeries FGWaveformGraphZeroLine;
+        private readonly LineSeries FGWaveformGraphDataLine;
         private bool calibration;
         private int functionGeneratorChannelInFocus;
         private bool openingFile;  // true if the user is opening a file
