@@ -400,6 +400,8 @@ namespace UnifiedTestSuiteApp
                     Position = AxisPosition.Left,
                     TicklineColor = hiddenColor,
                     TextColor = hiddenColor,
+                    IsZoomEnabled = false,
+                    IsPanEnabled = false,
                     Key = (i + 1).ToString(),  // make the key the channel number (it's fine the text is clear)
                 };
                 WaveformPlot.Model.Axes.Add(voltageAxes[i]);  // a lot of array accesses here, possibly redo with temp variables?
