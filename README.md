@@ -1,2 +1,2 @@
-# cnt-testsuite-unified-application
-The combined application for our saline tank testing platform
+# SALT-App
+The GUI Application for our SALT testing platform
