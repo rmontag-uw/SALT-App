@@ -15,9 +15,7 @@ namespace UnifiedTestSuiteApp
     public partial class MainWindow : Window
     {
         private const string appName = "S.A.L.T Application";
-        private const double refreshIntervalOneTwoChannels = 200;  // the graph refresh interval in ms for when 1-2 channels are enabled
-        private const double refreshIntervalThreePlusChannels = 300;
-        private double refreshInterval = refreshIntervalOneTwoChannels;  // just to start. Please don't change this manually without a reason
+        private double refreshInterval = 150;  // just to start. Please don't change this manually without a reason
         // updates when we have 3-4 channels enabled)
         private static System.Timers.Timer refreshTimer;    // gotta make sure there's no ambiguity with the threading timer
         private readonly IOscilloscope scope;               // 
@@ -52,6 +50,9 @@ namespace UnifiedTestSuiteApp
         private readonly double maximumAllowedAmplitude = 1;  // set to -1 to allow amplitudes up to the function generator's maximum
         private bool uploading;
         private bool loading;
+        private readonly int idealNumScreenPoints;
+        private readonly int oscilloscopeNumVertDiv;
+        private readonly int oscilloscopeNumHorizDiv;
         // each memory location is mapped to a WaveformFile that represents the waveform saved there.
         private readonly Dictionary<string, WaveformFile> fileDataMap;  // a map from the function generator's valid memory locations to
         // WaveformFiles that contain data about the waveform stored there

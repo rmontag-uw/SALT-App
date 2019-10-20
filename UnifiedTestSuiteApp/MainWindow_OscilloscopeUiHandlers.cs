@@ -41,7 +41,7 @@ namespace UnifiedTestSuiteApp
         private void OScope_UpdateEvent(object o, ElapsedEventArgs e)  // gotta have two functions here so this one can have the required
                                                                        // object o, ElapsedEventArgs e params
         {
-            refreshInterval = (int)(1000.0 * 12.0 * scope.GetXAxisScale());  // time/div times scale
+            // refreshInterval = (int)(1000.0 * 12.0 * scope.GetXAxisScale());  // time/div times scale
             //if(channelsToDraw.Count > 2)
             //{
             //    refreshInterval = refreshIntervalThreePlusChannels;
@@ -94,20 +94,38 @@ namespace UnifiedTestSuiteApp
                     PointsRead.Content = waveData.Length;
 
                 });
-
-                double[] screenPositionArray = waveData.Select(dataPoint => OScope_ScaleVoltage(dataPoint, currentScale, voltageOffset)).ToArray();
-
+                // scale the raw voltages into screen positions
+                double[] screenPositionArray = new double[idealNumScreenPoints + 1];  // create the array with the ideal number of screen points
+                screenPositionArray.Fill(double.NaN);  // fill the array with NaNs
+                // this is based off of how many points the oscilloscope returns when just capturing the screen, under ideal conditions.
+                IEnumerable<double> scaledPoints = waveData.Select(dataPoint => OScope_ScaleVoltage(dataPoint, currentScale, voltageOffset));
+                Array.Copy(scaledPoints.ToArray(), 0, screenPositionArray, 0, scaledPoints.Count());
+                double lastnonNaN = scaledPoints.Last(x => x != double.NaN);  // this is the actual worst. Stopping the graph from weirdly shuffling
+                    // off to the right whenever the oscilloscope doesn't have all the values at once is hard.
+                screenPositionArray[idealNumScreenPoints] = lastnonNaN;  // we get the last non-NaN value in the array, and put a value equal to that off of the
+                    // edge of the screen on the right, so the graph line will head for it even when the rest of the data isn't there, so everything looks 
+                    // as it should.
+                    // Oxyplots plz
                 LineSeries temp = new LineSeries
                 {
                     Color = OxyColor.FromArgb(color.A, color.R, color.G, color.B),  // used to associate the line with the respectively colored one on the scope
                                                                                     // oxyplots uses its own color handling so this is the result of that.
+                    BrokenLineStyle = LineStyle.None,  // make so broken lines don't get drawn
+                    CanTrackerInterpolatePoints = false,
+
 
                 };
                 temp.YAxisKey = voltageAxes[channelParam - 1].Key;  // keep the axis aligned
                 for (int i = 0; i < screenPositionArray.Length; i++)
                 {
-
-                    temp.Points.Add(new DataPoint(i - screenPositionArray.Length / 2, screenPositionArray[i]));
+                    if (screenPositionArray[i] == double.NaN)
+                    {
+                        temp.Points.Add(DataPoint.Undefined);  // undefined points don't get drawn
+                    }
+                    else
+                    {
+                        temp.Points.Add(new DataPoint(i - screenPositionArray.Length / 2, screenPositionArray[i]));
+                    }
                     // subtract half the length so we can center the axes in the middle just like on the scope
                 }
                 if (Application.Current == null)
