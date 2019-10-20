@@ -96,6 +96,9 @@ namespace UnifiedTestSuiteApp
                 fg = functionGenerators.connectedDevices[0];  // there's only one, that's the one we use
             }
 
+            idealNumScreenPoints = scope.GetNumPointsPerScreenCapture();  // for graphing purposes
+            oscilloscopeNumHorizDiv = scope.GetNumHorizontalDivisions();
+            oscilloscopeNumVertDiv = scope.GetNumVerticalDivisions();
             scope.Run();  // start the scope
             fg.SetAllOutputsOff();  // turn off all the outputs of the function generator
             scopeChannelInFocus = 1;  // start with channel 1 in focus for the scope
@@ -333,14 +336,16 @@ namespace UnifiedTestSuiteApp
 
             LinearAxis horizGridAxis1 = new LinearAxis  // make horizontal grid lines
             {
-                Position = AxisPosition.Left,  // no actual axis bar on the side plz
+                Position = AxisPosition.Left,  // radiate out from center bar to the left
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
                 IsPanEnabled = false,
-                //MajorStep = WaveformPlot.Model.Height / 8,   finding a function for the correct MajorStep instead of just a hardcoded value
-                // would be nice
-                MajorStep = 12.5,
+                MajorStep = idealNumScreenPoints / oscilloscopeNumVertDiv,
                 IsZoomEnabled = false,
+                Minimum = -1 * (idealNumScreenPoints / 2),   // point 0 is centered, so we have a range of -600 to 600 or similar
+                Maximum = (idealNumScreenPoints / 2),
+                AbsoluteMinimum = -1*(idealNumScreenPoints / 2),
+                AbsoluteMaximum = (idealNumScreenPoints/2),
                 MinimumPadding = 0,
                 MaximumPadding = 0,
                 TicklineColor = OxyColor.FromRgb(0, 0, 0),
@@ -349,17 +354,23 @@ namespace UnifiedTestSuiteApp
             };
             LinearAxis horizGridAxis2 = new LinearAxis  // make horizontal grid lines
             {
-                Position = AxisPosition.Right,  // no actual axis bar on the side plz
+                Position = AxisPosition.Right,  // radiate out of center bar to the right
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
                 IsPanEnabled = false,
-                MajorStep = 12.5,
+                MajorStep = idealNumScreenPoints / oscilloscopeNumVertDiv,
                 IsZoomEnabled = false,
+                Minimum = -1 * (idealNumScreenPoints / 2),   // point 0 is centered, so we have a range of -600 to 600 or similar
+                Maximum = (idealNumScreenPoints / 2),
+                AbsoluteMinimum = -1 * (idealNumScreenPoints / 2),
+                AbsoluteMaximum = (idealNumScreenPoints / 2),
+                IntervalLength = idealNumScreenPoints / oscilloscopeNumHorizDiv,
                 MinimumPadding = 0,
                 MaximumPadding = 0,
                 TicklineColor = OxyColor.FromRgb(0, 0, 0),
                 PositionAtZeroCrossing = true,
                 TextColor = hiddenColor,
+                ExtraGridlines = new double[] { 0 }
 
 
             };
@@ -368,7 +379,7 @@ namespace UnifiedTestSuiteApp
                 Position = AxisPosition.Top,
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
-                MajorStep = 100,
+                MajorStep = Width/oscilloscopeNumHorizDiv,
                 TicklineColor = OxyColor.FromRgb(0, 0, 0),
                 PositionAtZeroCrossing = true,
                 MinimumPadding = 0,
@@ -376,6 +387,7 @@ namespace UnifiedTestSuiteApp
                 IsZoomEnabled = false,
                 IsPanEnabled = false,
                 TextColor = hiddenColor,
+                ExtraGridlines = new double[] { 0 }
 
             };
             LinearAxis vertGridAxis2 = new LinearAxis
@@ -383,7 +395,7 @@ namespace UnifiedTestSuiteApp
                 Position = AxisPosition.Bottom,
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
-                MajorStep = 100,
+                MajorStep = Width / oscilloscopeNumHorizDiv,
                 TicklineColor = OxyColor.FromRgb(0, 0, 0),
                 PositionAtZeroCrossing = true,
                 MinimumPadding = 0,
