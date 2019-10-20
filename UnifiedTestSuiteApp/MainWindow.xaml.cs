@@ -338,10 +338,8 @@ namespace UnifiedTestSuiteApp
             {
                 Position = AxisPosition.Left,  // radiate out from center bar to the left
                 MajorGridlineStyle = LineStyle.Solid,
-                //MinorGridlineStyle = LineStyle.Dot,
+                MinorGridlineStyle = LineStyle.Dot,
                 IsPanEnabled = false,
-                //MajorStep = WaveformPlot.Model.Height / 8,   finding a function for the correct MajorStep instead of just a hardcoded value
-                // would be nice
                 MajorStep = idealNumScreenPoints / oscilloscopeNumVertDiv,
                 IsZoomEnabled = false,
                 Minimum = -1 * (idealNumScreenPoints / 2),   // point 0 is centered, so we have a range of -600 to 600 or similar
@@ -358,7 +356,7 @@ namespace UnifiedTestSuiteApp
             {
                 Position = AxisPosition.Right,  // radiate out of center bar to the right
                 MajorGridlineStyle = LineStyle.Solid,
-                //MinorGridlineStyle = LineStyle.Dot,
+                MinorGridlineStyle = LineStyle.Dot,
                 IsPanEnabled = false,
                 MajorStep = idealNumScreenPoints / oscilloscopeNumVertDiv,
                 IsZoomEnabled = false,

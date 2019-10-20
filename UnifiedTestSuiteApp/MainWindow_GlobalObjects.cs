@@ -15,7 +15,7 @@ namespace UnifiedTestSuiteApp
     public partial class MainWindow : Window
     {
         private const string appName = "S.A.L.T Application";
-        private double refreshInterval = 150;  // just to start. Please don't change this manually without a reason
+        private double refreshInterval = 300;  // just to start. Please don't change this manually without a reason
         // updates when we have 3-4 channels enabled)
         private static System.Timers.Timer refreshTimer;    // gotta make sure there's no ambiguity with the threading timer
         private readonly IOscilloscope scope;               // 

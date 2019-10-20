@@ -41,7 +41,7 @@ namespace UnifiedTestSuiteApp
         private void OScope_UpdateEvent(object o, ElapsedEventArgs e)  // gotta have two functions here so this one can have the required
                                                                        // object o, ElapsedEventArgs e params
         {
-            // refreshInterval = (int)(1000.0 * 12.0 * scope.GetXAxisScale());  // time/div times scale
+            //refreshInterval = (int)(1000.0 * 12.0 * scope.GetXAxisScale());  // time/div times scale
             //if(channelsToDraw.Count > 2)
             //{
             //    refreshInterval = refreshIntervalThreePlusChannels;
@@ -100,7 +100,7 @@ namespace UnifiedTestSuiteApp
                 // this is based off of how many points the oscilloscope returns when just capturing the screen, under ideal conditions.
                 IEnumerable<double> scaledPoints = waveData.Select(dataPoint => OScope_ScaleVoltage(dataPoint, currentScale, voltageOffset));
                 Array.Copy(scaledPoints.ToArray(), 0, screenPositionArray, 0, scaledPoints.Count());
-                double lastnonNaN = scaledPoints.Last(x => x != double.NaN);  // this is the actual worst. Stopping the graph from weirdly shuffling
+                double lastnonNaN = scaledPoints.LastOrDefault(x => x != double.NaN);  // this is the actual worst. Stopping the graph from weirdly shuffling
                     // off to the right whenever the oscilloscope doesn't have all the values at once is hard.
                 screenPositionArray[idealNumScreenPoints] = lastnonNaN;  // we get the last non-NaN value in the array, and put a value equal to that off of the
                     // edge of the screen on the right, so the graph line will head for it even when the rest of the data isn't there, so everything looks 
