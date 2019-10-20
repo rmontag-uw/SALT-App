@@ -280,7 +280,7 @@ namespace UnifiedTestSuiteApp
         private void OScope_TriggerSingleButton_Click(object sender, RoutedEventArgs e)
         {
             scope.Single();
-            RunLabel.Content = "Unknown";  // we currently don't have any way to tell if the scope is triggered other than polling a value over and over again.
+            RunLabel.Content = "Single";  // we currently don't have any way to tell if the scope is triggered other than polling a value over and over again.
             // if this ends up being important than I'll have to look into that.
         }
 
