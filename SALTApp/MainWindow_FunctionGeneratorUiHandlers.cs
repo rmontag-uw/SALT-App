@@ -109,12 +109,10 @@ namespace SALTApp
         {
             fg.SetAllOutputsOff();  // turn off all outputs
             channelsPlaying.Clear();
-            calibration = false;
             PlayWaveform.Content = "Play Waveform";
             channelsPlaying.Remove(functionGeneratorChannelInFocus);
             if (calibration)
             {
-                PlayWaveform.IsEnabled = true;
                 CalibrationButton.IsEnabled = true;
                 WaveformList.IsEnabled = true;
                 calibration = false;
