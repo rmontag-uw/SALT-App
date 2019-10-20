@@ -370,6 +370,7 @@ namespace UnifiedTestSuiteApp
                 TicklineColor = OxyColor.FromRgb(0, 0, 0),
                 PositionAtZeroCrossing = true,
                 TextColor = hiddenColor,
+                ExtraGridlines = new double[] { 0 }
 
 
             };
@@ -386,6 +387,7 @@ namespace UnifiedTestSuiteApp
                 IsZoomEnabled = false,
                 IsPanEnabled = false,
                 TextColor = hiddenColor,
+                ExtraGridlines = new double[] { 0 }
 
             };
             LinearAxis vertGridAxis2 = new LinearAxis
