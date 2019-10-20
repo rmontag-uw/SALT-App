@@ -41,16 +41,17 @@ namespace UnifiedTestSuiteApp
         private void OScope_UpdateEvent(object o, ElapsedEventArgs e)  // gotta have two functions here so this one can have the required
                                                                        // object o, ElapsedEventArgs e params
         {
-            if(channelsToDraw.Count > 2)
-            {
-                refreshInterval = refreshIntervalThreePlusChannels;
-            } else
-            {
-                refreshInterval = refreshIntervalOneTwoChannels;
-            }
+            refreshInterval = (int)(1000.0 * 12.0 * scope.GetXAxisScale());  // time/div times scale
+            //if(channelsToDraw.Count > 2)
+            //{
+            //    refreshInterval = refreshIntervalThreePlusChannels;
+            //} else
+            //{
+            //    refreshInterval = refreshIntervalOneTwoChannels;
+            //}
             if (drawGraph)  // might be too much but hey, this was a crazy thing to fix so let's just not touch this
             {
-                lock (downloadLock)
+                lock (downloadLock)  // for when we're downloading deep memory waveforms
                 {
                     OScope_DrawGraphHandler(channelsToDraw);
                 }
@@ -273,11 +274,23 @@ namespace UnifiedTestSuiteApp
             // if this ends up being important than I'll have to look into that.
         }
 
+
+        private void Oscope_Reset_Button_Click(object sender, RoutedEventArgs e)  // when the user clicks the "reset" button
+        {
+            ThreadPool.QueueUserWorkItem(lamda =>
+            {
+                OScope_DisableGraphAndUIElements();
+                scope.Reset();  // make sure this doesn't block the UI thread
+                OScope_EnableGraphAndUIElements();
+            });
+        }
+
         private void OScope_SaveWaveformCaptureButton_Click(object sender, RoutedEventArgs e)
         {
             drawGraph = false;
             OScope_DisableGraphAndUIElements();  // disable all the UI elements so the user can't mess with the capture
             scope.Stop();  // first stop the scope
+            SavingWaveformCaptureLabel.Visibility = Visibility.Visible;
             RunLabel.Content = "Stopped";
             scope.SetActiveChannel(scopeChannelInFocus);  // determine which channel we are capturing (only one at a time)
             int memDepth = scope.GetMemDepth();  // retrieve the memory depth of the scope
@@ -309,14 +322,12 @@ namespace UnifiedTestSuiteApp
 
         }
 
-
         private void OScope_DisableGraphAndUIElements()
         {
             // make these able to be run from any thread without issue by putting this here
             Application.Current.Dispatcher.Invoke(() =>
             {
                 drawGraph = false;
-                SavingWaveformCaptureLabel.Visibility = Visibility.Visible; // show the "saving waveform please wait" label
                 RunButton.IsEnabled = false;  // disable the run button until we're done here
                 StopButton.IsEnabled = false;
                 ZeroPositionOffset.IsEnabled = false;

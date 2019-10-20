@@ -52,7 +52,7 @@
         <Label Content="Memory Depth" HorizontalAlignment="Left" Margin="697,676,0,0" VerticalAlignment="Top" Width="93" Height="26"/>
         <Button Name="TriggerSingleButton" Content="Single" HorizontalAlignment="Left" Margin="695,652,0,0" VerticalAlignment="Top" Width="75" Click="OScope_TriggerSingleButton_Click" Height="20" RenderTransformOrigin="1,10.21"/>
         <Button Name="SaveWaveformCaptureButton" Content="Save Waveform&#xA;      Capture" HorizontalAlignment="Left" Margin="828,687,0,0" VerticalAlignment="Top" Width="104" Click="OScope_SaveWaveformCaptureButton_Click" Height="48"/>
-        <Label Name="SavingWaveformCaptureLabel" Content="Saving Deep Memory&#xD;&#xA;         Please Wait" HorizontalAlignment="Left" Margin="950,690,0,0" VerticalAlignment="Top" Width="141" Foreground="Red" Height="42"/>
+        <Label Name="SavingWaveformCaptureLabel" Content="Saving Deep Memory&#xD;&#xA;         Please Wait" HorizontalAlignment="Left" Margin="942,690,0,0" VerticalAlignment="Top" Width="135" Foreground="Red" Height="42"/>
         <oxy:PlotView Name="FGWaveformPlot" Margin="295,14,0,0" Background="WhiteSmoke" Height="204" Width="371" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <Button Name="CalibrationButton" Content="Calibrate" HorizontalAlignment="Left" Margin="126,9,0,0" VerticalAlignment="Top" Width="93" RenderTransformOrigin="0.54,0.07" Click="FG_Button_Click_Calibrate" Height="44"/>
         <Button Name="openWaveformButton" Content="Open Waveform" HorizontalAlignment="Left" Margin="9,9,0,0" VerticalAlignment="Top" Width="97" Height="44" Click="FG_Button_Click_OpenWaveform"/>
@@ -91,5 +91,6 @@
         </Label>
         <Label Content="Enabled&#xD;&#xA;Channels" HorizontalAlignment="Left" Margin="688,376,0,0" VerticalAlignment="Top" Width="66"/>
         <Label Content="Active Channel" HorizontalAlignment="Left" Margin="776,392,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="Oscope_Reset_Button" Content="Reset" HorizontalAlignment="Left" Margin="1087,704,0,0" VerticalAlignment="Top" Width="75" Click="Oscope_Reset_Button_Click"/>
     </Grid>
 </Window>
