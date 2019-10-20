@@ -8,9 +8,9 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.Threading;
 using System.Windows.Media.Imaging;
-using TestingPlatformLibrary.FunctionGeneratorAPI;
-using TestingPlatformLibrary.OscilloscopeAPI;
-using TestingPlatformLibrary;
+using libSALT.FunctionGeneratorAPI;
+using libSALT.OscilloscopeAPI;
+using libSALT;
 
 namespace SALTApp
 {

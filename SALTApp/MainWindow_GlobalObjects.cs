@@ -4,8 +4,8 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.IO;
 using System.Threading;
-using TestingPlatformLibrary.FunctionGeneratorAPI;
-using TestingPlatformLibrary.OscilloscopeAPI;
+using libSALT.FunctionGeneratorAPI;
+using libSALT.OscilloscopeAPI;
 
 namespace SALTApp
 {

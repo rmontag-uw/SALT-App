@@ -11,7 +11,7 @@ using System.IO;
 using System.Threading;
 using Microsoft.Win32;
 using System.Text.RegularExpressions;
-using TestingPlatformLibrary.FunctionGeneratorAPI;
+using libSALT.FunctionGeneratorAPI;
 
 namespace SALTApp
 {
