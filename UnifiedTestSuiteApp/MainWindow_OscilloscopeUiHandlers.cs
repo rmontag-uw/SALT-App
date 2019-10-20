@@ -41,6 +41,13 @@ namespace UnifiedTestSuiteApp
         private void OScope_UpdateEvent(object o, ElapsedEventArgs e)  // gotta have two functions here so this one can have the required
                                                                        // object o, ElapsedEventArgs e params
         {
+            if(channelsToDraw.Count > 2)
+            {
+                refreshInterval = refreshIntervalThreePlusChannels;
+            } else
+            {
+                refreshInterval = refreshIntervalOneTwoChannels;
+            }
             if (drawGraph)  // might be too much but hey, this was a crazy thing to fix so let's just not touch this
             {
                 lock (downloadLock)
@@ -53,7 +60,8 @@ namespace UnifiedTestSuiteApp
         {
             foreach (int channel in channelsToDraw)
             {
-
+                // TODO: Some sort of priority buffer, so we can have channel 2 stay on top of channel 1 when drawn at all times, just like on the
+                // actual scope, instead of them flickering over top of eachother back and forth. 
                 // spin graph drawing off into seperate thread
                 ThreadPool.QueueUserWorkItem(state => OScope_DrawGraph(channel, channelColors[channel - 1]));
             }
@@ -92,6 +100,7 @@ namespace UnifiedTestSuiteApp
                 {
                     Color = OxyColor.FromArgb(color.A, color.R, color.G, color.B),  // used to associate the line with the respectively colored one on the scope
                                                                                     // oxyplots uses its own color handling so this is the result of that.
+
                 };
                 temp.YAxisKey = voltageAxes[channelParam - 1].Key;  // keep the axis aligned
                 for (int i = 0; i < screenPositionArray.Length; i++)
