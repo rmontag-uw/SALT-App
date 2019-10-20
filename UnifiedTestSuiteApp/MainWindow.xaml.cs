@@ -12,7 +12,7 @@ using TestingPlatformLibrary.FunctionGeneratorAPI;
 using TestingPlatformLibrary.OscilloscopeAPI;
 using TestingPlatformLibrary;
 
-namespace UnifiedTestSuiteApp
+namespace SALTApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

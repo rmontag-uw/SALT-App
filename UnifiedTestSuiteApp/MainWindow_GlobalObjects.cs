@@ -7,7 +7,7 @@ using System.Threading;
 using TestingPlatformLibrary.FunctionGeneratorAPI;
 using TestingPlatformLibrary.OscilloscopeAPI;
 
-namespace UnifiedTestSuiteApp
+namespace SALTApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

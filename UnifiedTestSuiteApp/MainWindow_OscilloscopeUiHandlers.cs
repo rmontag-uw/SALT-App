@@ -10,7 +10,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace UnifiedTestSuiteApp
+namespace SALTApp
 {
     public partial class MainWindow : Window
     {
