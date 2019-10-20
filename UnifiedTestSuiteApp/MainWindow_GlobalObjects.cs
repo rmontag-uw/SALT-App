@@ -15,7 +15,10 @@ namespace UnifiedTestSuiteApp
     public partial class MainWindow : Window
     {
         private const string appName = "S.A.L.T Application";
-        private const int refreshInterval = 200;            // the graph refresh interval in ms
+        private const int refreshIntervalOneTwoChannels = 200;  // the graph refresh interval in ms for when 1-2 channels are enabled
+        private const int refreshIntervalThreePlusChannels = 300;
+        private int refreshInterval = refreshIntervalOneTwoChannels;  // just to start. Please don't change this manually without a reason
+        // updates when we have 3-4 channels enabled)
         private static System.Timers.Timer refreshTimer;    // gotta make sure there's no ambiguity with the threading timer
         private readonly IOscilloscope scope;               // 
         private TextWriter currentLogFile;  // a little bit gross, but overall actually a fine solution

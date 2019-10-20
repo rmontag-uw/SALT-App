@@ -127,8 +127,8 @@ namespace UnifiedTestSuiteApp
             SavingWaveformCaptureLabel.Visibility = Visibility.Hidden; // hide the "saving waveform please wait" label
             showTriggerLine = false;  // start by not showing the dashed line for the trigger
             double tempYScale = scope.GetYScale();
-            VoltageOffsetSlider.Maximum = voltageOffsetScaleConstant * tempYScale;
-            VoltageOffsetSlider.Minimum = -1 * VoltageOffsetSlider.Maximum;
+            VoltageOffsetSlider.Maximum = voltageOffsetScaleConstant * tempYScale;  // set the voltage slider max and min to whatever the max and min
+            VoltageOffsetSlider.Minimum = -1 * VoltageOffsetSlider.Maximum;  // are when we boot up the scope
             TriggerSlider.Maximum = triggerPositionScaleConstant * tempYScale;  // trigger slider needs the same range as the offset slider
             TriggerSlider.Minimum = -1 * TriggerSlider.Maximum;
             numOscilloscopeChannels = scope.GetNumChannels();
