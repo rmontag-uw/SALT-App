@@ -1,7 +1,7 @@
-﻿<Application x:Class="UnifiedTestSuiteApp.App"
+﻿<Application x:Class="SALTApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:UnifiedTestSuiteApp"
+             xmlns:local="clr-namespace:SALTApp"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

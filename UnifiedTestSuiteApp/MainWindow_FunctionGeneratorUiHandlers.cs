@@ -13,7 +13,7 @@ using Microsoft.Win32;
 using System.Text.RegularExpressions;
 using TestingPlatformLibrary.FunctionGeneratorAPI;
 
-namespace UnifiedTestSuiteApp
+namespace SALTApp
 {
     public partial class MainWindow : Window
     {
