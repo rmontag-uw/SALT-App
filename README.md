@@ -1,2 +1,2 @@
 # SALT-App
-The GUI Application for our SALT testing platform
+The GUI Application for our S.A.L.T platform
