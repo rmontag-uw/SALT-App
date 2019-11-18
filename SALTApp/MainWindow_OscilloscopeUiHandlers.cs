@@ -287,12 +287,12 @@ namespace SALTApp
 
         private void Oscope_Reset_Button_Click(object sender, RoutedEventArgs e)  // when the user clicks the "reset" button
         {
-            ThreadPool.QueueUserWorkItem(lamda =>
-            {
-                OScope_DisableGraphAndUIElements();
-                scope.Reset();  // make sure this doesn't block the UI thread
-                OScope_EnableGraphAndUIElements();
-            });
+            //ThreadPool.QueueUserWorkItem(lamda =>
+            //{
+            //    OScope_DisableGraphAndUIElements();
+            //    scope.Reset();  // make sure this doesn't block the UI thread
+            //    OScope_EnableGraphAndUIElements();
+            //});
         }
 
         private void OScope_SaveWaveformCaptureButton_Click(object sender, RoutedEventArgs e)
@@ -334,9 +334,6 @@ namespace SALTApp
 
         private void OScope_DisableGraphAndUIElements()
         {
-            // make these able to be run from any thread without issue by putting this here
-            Application.Current.Dispatcher.Invoke(() =>
-            {
                 drawGraph = false;
                 RunButton.IsEnabled = false;  // disable the run button until we're done here
                 StopButton.IsEnabled = false;
@@ -359,14 +356,10 @@ namespace SALTApp
                 {
                     rb.IsEnabled = false;
                 }
-
-            });
         }
 
         private void OScope_EnableGraphAndUIElements()
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
                 SavingWaveformCaptureLabel.Visibility = Visibility.Hidden; // hide the "saving waveform please wait" label
                 RunButton.IsEnabled = true;  // disable the run button until we're done here
                 StopButton.IsEnabled = true;
@@ -389,7 +382,6 @@ namespace SALTApp
                 {
                     rb.IsEnabled = true;
                 }
-            });
             drawGraph = true;
         }
     }
