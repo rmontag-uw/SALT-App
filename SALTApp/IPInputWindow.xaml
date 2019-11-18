@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaltApp"
         mc:Ignorable="d"
-        Title="Window1" Height="344.8" Width="352.4"
+        Title="IP Address Input" Height="344.8" Width="352.4"
         Closing="Window_Closing">
     <Grid>
         <TextBox x:Name="FunctionGenIPInputBox" HorizontalAlignment="Left" Height="23" Margin="115,62,0,0" TextWrapping="Wrap" Text="Function Gen IP" VerticalAlignment="Top" Width="120" PreviewTextInput="HandleIPInput"/>

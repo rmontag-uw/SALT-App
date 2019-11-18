@@ -21,7 +21,7 @@ namespace SaltApp
         }
 
 
-        private static readonly Regex IPRegex = new Regex("[^0-9.-]+");
+        private static readonly Regex IPRegex = new Regex("[^0-9.]+");
         private static bool IsTextAllowed(string text)
         {
             return !IPRegex.IsMatch(text);
