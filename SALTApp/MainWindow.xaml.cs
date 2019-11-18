@@ -493,8 +493,8 @@ namespace SALTApp
                     OSCOPE_IP = "0.0.0.0"; // set to default IP 
                 } else
                 {
-                    FG_IP = configInput[1].Substring(6);  // get the actual IP strings from config file
-                    OSCOPE_IP = configInput[2].Substring(6);
+                    FG_IP = configInput[1].Substring(5);  // get the actual IP strings from config file
+                    OSCOPE_IP = configInput[2].Substring(5);
                 }
             }
             SaltApp.IPInputWindow IPWindow = new SaltApp.IPInputWindow();
@@ -504,6 +504,40 @@ namespace SALTApp
             FG_IP = IPWindow.FunctionGenIPInputBox.Text;
             OSCOPE_IP = IPWindow.OscilloscopeIPInputBox.Text;  // get the results after the user clicked okay
 
+            File.WriteAllText("enet.cfg", "#Saved IP Addresses, do not edit\nFGIP=" + FG_IP + "\nOSIP=" + OSCOPE_IP);  // write the user's specified IP addresses
+            // to the file, where they can be read from again.
+
+            Console.WriteLine(FG_IP);
+            string FG_VISA = "TCPIP0::" + FG_IP + "::inst0::INSTR";  // generate the two VISA ids for devices at the given IP addresses
+            string OSCOPE_VISA = "TCPIP0::" + OSCOPE_IP + "::inst0::INSTR";
+            IFunctionGenerator tempFG = VISAFunctionGenerator.TryOpen(FG_VISA);  // attempt to open the devices at the specified IP addresses
+            IOscilloscope tempScope = VISAOscilloscope.TryOpen(OSCOPE_VISA);  
+            if(tempFG == null)
+            {
+                MessageBoxResult result = MessageBox.Show("Error: Could not open function generator at " + FG_IP,
+                   appName, MessageBoxButton.OK);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:  // there's only one case
+                        ExitAll();  // let the user try again without exiting probably, but we'll do that logic in a sec
+                        return;
+                }
+            }
+            if (tempScope == null)
+            {
+                MessageBoxResult result = MessageBox.Show("Error: Could not open oscilloscope at " + OSCOPE_IP,
+                   appName, MessageBoxButton.OK);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:  // there's only one case
+                        ExitAll();  // let the user try again without exiting probably, but we'll do that logic in a sec
+                        return;
+                }
+            }
+            // if we made it down here, both the scope and function generator are initialized, so we can set the global variables and return from this function
+            fg = tempFG;
+            scope = tempScope;
+            // yay!
         }
 
         private void ExitAll()
