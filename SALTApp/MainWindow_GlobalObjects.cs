@@ -18,7 +18,7 @@ namespace SALTApp
         private const double refreshInterval = 250;  // just to start. Please don't change this manually without a reason
         // updates when we have 3-4 channels enabled)
         private static System.Timers.Timer refreshTimer;    // gotta make sure there's no ambiguity with the threading timer
-        private readonly IOscilloscope scope;               // 
+        private IOscilloscope scope;               // 
         private TextWriter currentLogFile;  // a little bit gross, but overall actually a fine solution
         private int scopeChannelInFocus;
         private readonly HashSet<int> channelsToDisable;
@@ -39,7 +39,7 @@ namespace SALTApp
         private readonly double voltageOffsetScaleConstant;
         private readonly double timeOffsetScaleConstant;
         private readonly System.Drawing.Color[] channelColors;
-        private readonly IFunctionGenerator fg;
+        private IFunctionGenerator fg;
         private readonly LineSeries FGWaveformGraphZeroLine;
         private readonly LineSeries FGWaveformGraphDataLine;
         private bool calibration;
