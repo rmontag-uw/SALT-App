@@ -506,8 +506,6 @@ namespace SALTApp
 
             File.WriteAllText("enet.cfg", "#Saved IP Addresses, do not edit\nFGIP=" + FG_IP + "\nOSIP=" + OSCOPE_IP);  // write the user's specified IP addresses
             // to the file, where they can be read from again.
-
-            Console.WriteLine(FG_IP);
             string FG_VISA = "TCPIP0::" + FG_IP + "::inst0::INSTR";  // generate the two VISA ids for devices at the given IP addresses
             string OSCOPE_VISA = "TCPIP0::" + OSCOPE_IP + "::inst0::INSTR";
             IFunctionGenerator tempFG = VISAFunctionGenerator.TryOpen(FG_VISA);  // attempt to open the devices at the specified IP addresses

@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaltApp"
         mc:Ignorable="d"
-        Title="Window1" Height="344.8" Width="352.4">
+        Title="Window1" Height="344.8" Width="352.4"
+        Closing="Window_Closing">
     <Grid>
         <TextBox x:Name="FunctionGenIPInputBox" HorizontalAlignment="Left" Height="23" Margin="115,62,0,0" TextWrapping="Wrap" Text="Function Gen IP" VerticalAlignment="Top" Width="120" PreviewTextInput="HandleIPInput"/>
         <TextBox x:Name="OscilloscopeIPInputBox" HorizontalAlignment="Left" Height="23" Margin="115,151,0,0" TextWrapping="Wrap" Text="Oscilloscope IP" VerticalAlignment="Top" Width="120" PreviewTextInput="HandleIPInput"/>
-        <Button Content="Okay" HorizontalAlignment="Left" Margin="135,203,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Name="OKButton" Content="Okay" HorizontalAlignment="Left" Margin="135,203,0,0" VerticalAlignment="Top" Width="75" Click="OKButton_Click"/>
         <Label Content="Input Function Generator IP Address" HorizontalAlignment="Left" Margin="76,32,0,0" VerticalAlignment="Top"/>
         <Label Content="Input Oscilloscope IP Address" HorizontalAlignment="Left" Margin="93,114,0,0" VerticalAlignment="Top"/>
-
     </Grid>
 </Window>

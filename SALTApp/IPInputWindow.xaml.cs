@@ -9,7 +9,7 @@ namespace SaltApp
     /// </summary>
     public partial class IPInputWindow : Window
     {
-
+        bool IPsGiven;
         public IPInputWindow()
         {
             InitializeComponent();
@@ -17,16 +17,27 @@ namespace SaltApp
 
         private void HandleIPInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = IsTextAllowed(e.Text);
+            e.Handled = !IsTextAllowed(e.Text);
         }
 
 
-        private static readonly Regex IPRegex = new Regex(@"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$");// new Regex(@"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
-
+        private static readonly Regex IPRegex = new Regex("[^0-9.-]+");
         private static bool IsTextAllowed(string text)
         {
-            return IPRegex.IsMatch(text);
+            return !IPRegex.IsMatch(text);
         }
 
+        private void OKButton_Click(object sender, RoutedEventArgs e)
+        {
+            IPsGiven = true;
+            Close();  // close the window
+        }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!IPsGiven)
+            {
+                System.Diagnostics.Process.GetCurrentProcess().Kill();  // a bit brutal but it works
+            }
+        }       
     }
 }
