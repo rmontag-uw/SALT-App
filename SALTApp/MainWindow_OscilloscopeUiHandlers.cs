@@ -287,12 +287,12 @@ namespace SALTApp
 
         private void Oscope_Reset_Button_Click(object sender, RoutedEventArgs e)  // when the user clicks the "reset" button
         {
-            ThreadPool.QueueUserWorkItem(lamda =>
-            {
-                OScope_DisableGraphAndUIElements();
-                scope.Reset();  // make sure this doesn't block the UI thread
-                OScope_EnableGraphAndUIElements();
-            });
+            //ThreadPool.QueueUserWorkItem(lamda =>
+            //{
+            //    OScope_DisableGraphAndUIElements();
+            //    scope.Reset();  // make sure this doesn't block the UI thread
+            //    OScope_EnableGraphAndUIElements();
+            //});
         }
 
         private void OScope_SaveWaveformCaptureButton_Click(object sender, RoutedEventArgs e)
