@@ -497,7 +497,7 @@ namespace SALTApp
                     OSCOPE_IP = configInput[2].Substring(5);
                 }
             }
-            SaltApp.IPInputWindow IPWindow = new SaltApp.IPInputWindow();
+            SaltApp.IPInputWindow IPWindow = new SaltApp.IPInputWindow(); 
             IPWindow.FunctionGenIPInputBox.Text = FG_IP;
             IPWindow.OscilloscopeIPInputBox.Text = OSCOPE_IP;
             IPWindow.ShowDialog();
@@ -514,7 +514,7 @@ namespace SALTApp
             {
                 MessageBoxResult result = MessageBox.Show("Error: Could not open function generator at " + FG_IP,
                    appName, MessageBoxButton.OK);
-                switch (result)
+                switch (result) 
                 {
                     case MessageBoxResult.OK:  // there's only one case
                         ExitAll();  // let the user try again without exiting probably, but we'll do that logic in a sec
