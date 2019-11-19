@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using libSALT.FunctionGeneratorAPI;
 using libSALT.OscilloscopeAPI;
 using libSALT;
+using System.IO;
 
 namespace SALTApp
 {
@@ -34,68 +35,45 @@ namespace SALTApp
             channelsPlaying = new HashSet<int>();
             cancelToken = new CancellationTokenSource();
             AutoResetEvent autoEvent = new AutoResetEvent(false);
-            // this is one of those situations where C#'s ability to use "var" is nice, but statically typed until the end!
-            VISADevice.ConnectedDeviceStruct<VISAOscilloscope> oscilloscopes = VISAOscilloscope.GetConnectedOscilloscopes();
-            VISADevice.ConnectedDeviceStruct<VISAFunctionGenerator> functionGenerators = VISAFunctionGenerator.GetConnectedFunctionGenerators();
-            if (oscilloscopes.connectedDevices.Length == 0)
+
+            // Generate configuration file if one does not exist:    (replace this in a future update to be more stable and make more sense)
+            if (!File.Exists("config.cfg"))
             {
-                // show a messagebox error if there are no scopes connected
-                MessageBoxResult result = MessageBox.Show("Error: No oscilloscopes found. " +
-                    "Make sure that the oscilloscope is connected and turned on and then try again",
-                    appName, MessageBoxButton.OK);
-                switch (result)
-                {
-                    case MessageBoxResult.OK:  // there's only one case
-                        ExitAll();  // might cause annoying task cancelled errors, we'll have to deal with those
-                        return;
-                }
-            }
-            if (functionGenerators.connectedDevices.Length == 0)
-            {
-                // show a messagebox error if there are no function generators connected
-                MessageBoxResult result = MessageBox.Show("Error: No function generators found. " +
-                    "Make sure that the function generator is connected and turned on and then try again",
-                    appName, MessageBoxButton.OK);
-                switch (result)
-                {
-                    case MessageBoxResult.OK:  // there's only one case
-                        ExitAll();  // might cause annoying task cancelled errors, we'll have to deal with those
-                        return;
-                }
-            }
-            if (oscilloscopes.connectedDevices.Length > 1)
-            {
-                MessageBoxResult result = MessageBox.Show("Error: Too many oscilloscopes found. " +
-                   "Unplug all but one oscilloscope and then try again",
-                   appName, MessageBoxButton.OK);
-                switch (result)
-                {
-                    case MessageBoxResult.OK:  // there's only one case
-                        ExitAll();  // might cause annoying task cancelled errors, we'll have to deal with those
-                        return;
-                }
-            }
-            else
-            {
-                scope = oscilloscopes.connectedDevices[0];  // there's only one, that's the one we use
-            }
-            if (functionGenerators.connectedDevices.Length > 1)
-            {
-                MessageBoxResult result = MessageBox.Show("Error: Too many function generators found. " +
-                   "Unplug all but one function generator and then try again",
-                   appName, MessageBoxButton.OK);
-                switch (result)
-                {
-                    case MessageBoxResult.OK:  // there's only one case
-                        ExitAll();  // might cause annoying task cancelled errors, we'll have to deal with those
-                        return;
-                }
-            }
-            else
-            {
-                fg = functionGenerators.connectedDevices[0];  // there's only one, that's the one we use
+                File.WriteAllText("config.cfg", "#Replace USB with ENET to use ethernet connectivity, do not include spaces and do not remove this line!\nINTERFACE=USB");
+                    // a bit sketchy looking, but it works!
             }
 
+            string[] configInput = File.ReadAllLines("config.cfg");
+            string interfaceConfig;
+            if (configInput.Length > 0)  // if the file is just empty for some reason, use USB
+            {
+                interfaceConfig = configInput[1];
+                if (interfaceConfig.Equals("INTERFACE=ENET"))  // don't crash on invalid config files (in the future alert the user), just use USB
+                {
+                    interfaceConfig = "ENET";
+                } else
+                {
+                    interfaceConfig = "USB";
+                }
+            } else
+            {
+                interfaceConfig = "USB";
+            }
+            if (interfaceConfig.Equals("ENET"))
+            {
+                ENET_Constructor();  // aaaaaa
+            } else
+            {
+                USB_Constructor(); 
+            }
+            // at the end of both options, scope and fg are set and initialized for I/O operations
+
+
+
+            // now we will read in that config file to see whether to use USB connection or over Ethernet, which means bringing up a seperate window
+
+          
+           
             idealNumScreenPoints = scope.GetNumPointsPerScreenCapture();  // for graphing purposes
             oscilloscopeNumHorizDiv = scope.GetNumHorizontalDivisions();
             oscilloscopeNumVertDiv = scope.GetNumVerticalDivisions();
@@ -430,6 +408,134 @@ namespace SALTApp
             double triggerLineScaled = (scope.GetTriggerLevel() * currentYScale) - (currentYScale / 2);
             WaveformPlot.Model.Series.Add(triggerLine);
             WaveformPlot.Model.InvalidatePlot(true);
+        }
+
+        private void USB_Constructor()  // if we're using a USB interface (or really anything VISA compatible but not LAN)
+        {
+            // this is one of those situations where C#'s ability to use "var" is nice, but statically typed until the end!
+            VISADevice.ConnectedDeviceStruct<VISAOscilloscope> oscilloscopes = VISAOscilloscope.GetConnectedOscilloscopes();
+            VISADevice.ConnectedDeviceStruct<VISAFunctionGenerator> functionGenerators = VISAFunctionGenerator.GetConnectedFunctionGenerators();
+            if (oscilloscopes.connectedDevices.Length == 0)
+            {
+                // show a messagebox error if there are no scopes connected
+                MessageBoxResult result = MessageBox.Show("Error: No oscilloscopes found. " +
+                    "Make sure that the oscilloscope is connected and turned on and then try again",
+                    appName, MessageBoxButton.OK);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:  // there's only one case
+                        ExitAll();  // might cause annoying task cancelled errors, we'll have to deal with those
+                        return;
+                }
+            }
+            if (functionGenerators.connectedDevices.Length == 0)
+            {
+                // show a messagebox error if there are no function generators connected
+                MessageBoxResult result = MessageBox.Show("Error: No function generators found. " +
+                    "Make sure that the function generator is connected and turned on and then try again",
+                    appName, MessageBoxButton.OK);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:  // there's only one case
+                        ExitAll();  // might cause annoying task cancelled errors, we'll have to deal with those
+                        return;
+                }
+            }
+            if (oscilloscopes.connectedDevices.Length > 1)
+            {
+                MessageBoxResult result = MessageBox.Show("Error: Too many oscilloscopes found. " +
+                   "Unplug all but one oscilloscope and then try again",
+                   appName, MessageBoxButton.OK);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:  // there's only one case
+                        ExitAll();  // might cause annoying task cancelled errors, we'll have to deal with those
+                        return;
+                }
+            }
+            else
+            {
+                scope = oscilloscopes.connectedDevices[0];  // there's only one, that's the one we use
+            }
+            if (functionGenerators.connectedDevices.Length > 1)
+            {
+                MessageBoxResult result = MessageBox.Show("Error: Too many function generators found. " +
+                   "Unplug all but one function generator and then try again",
+                   appName, MessageBoxButton.OK);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:  // there's only one case
+                        ExitAll();  // might cause annoying task cancelled errors, we'll have to deal with those
+                        return;
+                }
+            }
+            else
+            {
+                fg = functionGenerators.connectedDevices[0];  // there's only one, that's the one we use
+            }
+
+        }
+
+        private void ENET_Constructor()
+        {
+            string FG_IP = "";
+            string OSCOPE_IP = "";
+            // #Saved IP Addresses, do not edit
+            // FGIP=0.0.0.0
+            // OSIP=0.0.0.0
+            if (File.Exists("enet.cfg"))
+            {
+                string[] configInput = File.ReadAllLines("enet.cfg");
+                if (configInput.Length < 3)
+                {
+                    // someone messed with the config file >:(
+                    FG_IP = "0.0.0.0";
+                    OSCOPE_IP = "0.0.0.0"; // set to default IP 
+                } else
+                {
+                    FG_IP = configInput[1].Substring(5);  // get the actual IP strings from config file
+                    OSCOPE_IP = configInput[2].Substring(5);
+                }
+            }
+            SaltApp.IPInputWindow IPWindow = new SaltApp.IPInputWindow(); 
+            IPWindow.FunctionGenIPInputBox.Text = FG_IP;
+            IPWindow.OscilloscopeIPInputBox.Text = OSCOPE_IP;
+            IPWindow.ShowDialog();
+            FG_IP = IPWindow.FunctionGenIPInputBox.Text;
+            OSCOPE_IP = IPWindow.OscilloscopeIPInputBox.Text;  // get the results after the user clicked okay
+
+            File.WriteAllText("enet.cfg", "#Saved IP Addresses, do not edit\nFGIP=" + FG_IP + "\nOSIP=" + OSCOPE_IP);  // write the user's specified IP addresses
+            // to the file, where they can be read from again.
+            string FG_VISA = "TCPIP0::" + FG_IP + "::inst0::INSTR";  // generate the two VISA ids for devices at the given IP addresses
+            string OSCOPE_VISA = "TCPIP0::" + OSCOPE_IP + "::inst0::INSTR";
+            IFunctionGenerator tempFG = VISAFunctionGenerator.TryOpen(FG_VISA);  // attempt to open the devices at the specified IP addresses
+            IOscilloscope tempScope = VISAOscilloscope.TryOpen(OSCOPE_VISA);  
+            if(tempFG == null)
+            {
+                MessageBoxResult result = MessageBox.Show("Error: Could not open function generator at " + FG_IP,
+                   appName, MessageBoxButton.OK);
+                switch (result) 
+                {
+                    case MessageBoxResult.OK:  // there's only one case
+                        ExitAll();  // let the user try again without exiting probably, but we'll do that logic in a sec
+                        return;
+                }
+            }
+            if (tempScope == null)
+            {
+                MessageBoxResult result = MessageBox.Show("Error: Could not open oscilloscope at " + OSCOPE_IP,
+                   appName, MessageBoxButton.OK);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:  // there's only one case
+                        ExitAll();  // let the user try again without exiting probably, but we'll do that logic in a sec
+                        return;
+                }
+            }
+            // if we made it down here, both the scope and function generator are initialized, so we can set the global variables and return from this function
+            fg = tempFG;
+            scope = tempScope;
+            // yay!
         }
 
         private void ExitAll()
