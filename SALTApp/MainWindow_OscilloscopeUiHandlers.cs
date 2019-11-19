@@ -324,11 +324,10 @@ namespace SALTApp
                         currentLogFile.WriteLine(scopeChannelInFocus + "," + voltages[i] + "," + (xInc * i));
                     }
                     currentLogFile.Flush();  // make sure stuff actually gets written out, even before the program is closed
-                    currentLogFile.Close();
-                    OScope_EnableGraphAndUIElements();
+                    currentLogFile.Close();                   
                 }
             });
-
+            OScope_EnableGraphAndUIElements();
 
         }
 
