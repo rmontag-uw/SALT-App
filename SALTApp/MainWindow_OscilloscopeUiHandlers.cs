@@ -287,17 +287,11 @@ namespace SALTApp
 
         private void Oscope_Reset_Button_Click(object sender, RoutedEventArgs e)  // when the user clicks the "reset" button
         {
-            //ThreadPool.QueueUserWorkItem(lamda =>
-            //{
-            //    OScope_DisableGraphAndUIElements();
-            //    scope.Reset();  // make sure this doesn't block the UI thread
-            //    OScope_EnableGraphAndUIElements();
-            //});
+            // removed
         }
 
         private void OScope_SaveWaveformCaptureButton_Click(object sender, RoutedEventArgs e)
         {
-            drawGraph = false;
             OScope_DisableGraphAndUIElements();  // disable all the UI elements so the user can't mess with the capture
             scope.Stop();  // first stop the scope
             SavingWaveformCaptureLabel.Visibility = Visibility.Visible;
@@ -324,10 +318,12 @@ namespace SALTApp
                         currentLogFile.WriteLine(scopeChannelInFocus + "," + voltages[i] + "," + (xInc * i));
                     }
                     currentLogFile.Flush();  // make sure stuff actually gets written out, even before the program is closed
-                    currentLogFile.Close();                   
+                    currentLogFile.Close(); 
+                    
                 }
+                OScope_EnableGraphAndUIElements();
             });
-            OScope_EnableGraphAndUIElements();
+           
 
         }
 
@@ -359,10 +355,11 @@ namespace SALTApp
 
         private void OScope_EnableGraphAndUIElements()
         {
+            Application.Current.Dispatcher.Invoke(() => { 
                 SavingWaveformCaptureLabel.Visibility = Visibility.Hidden; // hide the "saving waveform please wait" label
                 RunButton.IsEnabled = true;  // disable the run button until we're done here
                 StopButton.IsEnabled = true;
-                MemoryDepthComboBox.IsEnabled = true;  // definitely disable this until we're done. We don't want the user changing the memory depth
+               // MemoryDepthComboBox.IsEnabled = true;  // definitely disable this until we're done. We don't want the user changing the memory depth
                                                        // mid download (not like the scope would let them but still).
                 TimeScalePresetComboBox.IsEnabled = true;
                 VoltageScalePresetComboBox.IsEnabled = true;
@@ -382,6 +379,7 @@ namespace SALTApp
                     rb.IsEnabled = true;
                 }
             drawGraph = true;
+            });
         }
     }
 }
