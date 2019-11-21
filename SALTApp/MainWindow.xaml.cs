@@ -69,8 +69,9 @@ namespace SALTApp
             }
             if (interfaceConfig.Equals("ENET"))
             {
-                ENET_Constructor();
-                Thread.Sleep(500);
+                Thread.Sleep(1000);  // it seems that in some VISA implementations that repeatedly spam-opening the application will cause timeout errors
+                ENET_Constructor(); // this is a temporary fix to that. Also don't spam-open the application, wait a second or two before reopening.
+                Thread.Sleep(1000);
             } else
             {
                 USB_Constructor(); 
@@ -517,8 +518,8 @@ namespace SALTApp
             // to the file, where they can be read from again.
             string FG_VISA = "TCPIP0::" + FG_IP + "::inst0::INSTR";  // generate the two VISA ids for devices at the given IP addresses
             string OSCOPE_VISA = "TCPIP0::" + OSCOPE_IP + "::inst0::INSTR";
+            IOscilloscope tempScope = VISAOscilloscope.TryOpen(OSCOPE_VISA);
             IFunctionGenerator tempFG = VISAFunctionGenerator.TryOpen(FG_VISA);  // attempt to open the devices at the specified IP addresses
-            IOscilloscope tempScope = VISAOscilloscope.TryOpen(OSCOPE_VISA);  
             if(tempFG == null)
             {
                 MessageBoxResult result = MessageBox.Show("Error: Could not open function generator at " + FG_IP,
