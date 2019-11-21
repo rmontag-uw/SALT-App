@@ -1,15 +1,23 @@
-﻿using System.Text.RegularExpressions;
+﻿/* IP Input Window
+ * S.A.L.T Project Application
+ * Written by Maurice Montag, 2019
+ * Developed as a collaboration between GRIDLab and BioRobotics Lab, University of Washington, Seattle
+ * Copyright 2019 University of Washington
+ * See included LICENSE.TXT for license information
+ */
+
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 
-namespace SaltApp
+namespace SALTApp
 {
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
     public partial class IPInputWindow : Window
     {
-        bool IPsGiven;
+        private bool IPsGiven;
         public IPInputWindow()
         {
             InitializeComponent();

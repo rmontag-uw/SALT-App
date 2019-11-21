@@ -1,4 +1,12 @@
-﻿using System.Collections.Generic;
+﻿/* Application Global Objects
+ * S.A.L.T Project Application
+ * Written by Maurice Montag, 2019
+ * Developed as a collaboration between GRIDLab and BioRobotics Lab, University of Washington, Seattle
+ * Copyright 2019 University of Washington
+ * See included LICENSE.TXT for license information
+ */
+
+using System.Collections.Generic;
 using System.Windows;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -15,7 +23,7 @@ namespace SALTApp
     public partial class MainWindow : Window
     {
         private const string appName = "S.A.L.T Application";
-        private const double refreshInterval = 250;  // just to start. Please don't change this manually without a reason
+        private const double refreshInterval = 250;  // graph refresh interval in ms.
         // updates when we have 3-4 channels enabled)
         private static System.Timers.Timer refreshTimer;    // gotta make sure there's no ambiguity with the threading timer
         private IOscilloscope scope;               // 

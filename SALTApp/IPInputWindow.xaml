@@ -1,9 +1,9 @@
-﻿<Window x:Class="SaltApp.IPInputWindow"
+﻿<Window x:Class="SALTApp.IPInputWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SaltApp"
+        xmlns:local="clr-namespace:SALTApp"
         mc:Ignorable="d"
         Title="IP Address Input" Height="344.8" Width="352.4"
         Closing="Window_Closing">

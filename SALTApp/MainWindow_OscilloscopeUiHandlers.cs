@@ -1,4 +1,12 @@
-﻿using OxyPlot;
+﻿/* Oscilloscope UI Handlers
+ * S.A.L.T Project Application
+ * Written by Maurice Montag, 2019
+ * Developed as a collaboration between GRIDLab and BioRobotics Lab, University of Washington, Seattle
+ * Copyright 2019 University of Washington
+ * See included LICENSE.TXT for license information
+ */
+
+using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;

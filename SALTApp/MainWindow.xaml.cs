@@ -1,4 +1,12 @@
-﻿using System;
+﻿/* Main Application Window (mostly just the constructor)
+ * S.A.L.T Project Application
+ * Written by Maurice Montag, 2019
+ * Developed as a collaboration between GRIDLab and BioRobotics Lab, University of Washington, Seattle
+ * Copyright 2019 University of Washington
+ * See included LICENSE.TXT for license information
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -497,7 +505,7 @@ namespace SALTApp
                     OSCOPE_IP = configInput[2].Substring(5);
                 }
             }
-            SaltApp.IPInputWindow IPWindow = new SaltApp.IPInputWindow(); 
+            IPInputWindow IPWindow = new IPInputWindow(); 
             IPWindow.FunctionGenIPInputBox.Text = FG_IP;
             IPWindow.OscilloscopeIPInputBox.Text = OSCOPE_IP;
             IPWindow.ShowDialog();
