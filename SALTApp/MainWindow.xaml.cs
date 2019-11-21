@@ -69,7 +69,8 @@ namespace SALTApp
             }
             if (interfaceConfig.Equals("ENET"))
             {
-                ENET_Constructor();  // aaaaaa
+                ENET_Constructor();
+                Thread.Sleep(500);
             } else
             {
                 USB_Constructor(); 
