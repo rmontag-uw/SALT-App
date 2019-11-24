@@ -8,7 +8,7 @@ Dr. Howard Chizeck
 Dr. Eric Chudler and The UW Center for Neurotechnology
 The National Science Foundation (This project was supported by National Science Foundation Award EEC #1028725)
 The Interchangeable Virtual Instruments (IVI) Foundation
-OxyPlots Contributers
+OxyPlots Contributors
 
 This Software uses the OxyPlots Charting Library, which is available under an MIT license
 at https://oxyplot.github.io/
